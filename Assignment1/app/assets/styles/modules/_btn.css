@@ -1,0 +1,28 @@
+
+.btn{
+
+	color: #FFF;
+	text-decoration: none;
+	padding: 1rem, 1.9rem;
+	display: inline-block;
+	border-radius: 1rem;
+
+	&--orange {
+		background-color: $mainOrange;
+	}
+
+	&--large{
+		padding: 1.1rem 1.9rem;
+
+
+		@mixin atSmall{
+			font-size: 1.25rem;
+		}
+	}
+
+	&--login{
+		padding: 1rem, 1rem;
+		background-color: $mainOrange;
+	}
+
+}
