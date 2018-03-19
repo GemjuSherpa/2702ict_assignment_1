@@ -9,7 +9,6 @@
 	&--pull-right{
 		@mixin atMedium{
 			float: right;
-			margin-right: 2rem;
 		}
 		
 	}

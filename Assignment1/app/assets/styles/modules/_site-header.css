@@ -10,31 +10,58 @@
 	}
 
 	@mixin atMedium{
-		background-color: rgba($mainBlue, .3);
+		background-color: rgba($mainBlue, .2);
 	}
 
 	&__btn-container{
 		@mixin atMedium{
-			padding-top: 10px;
+			padding-top: 1rem;
 			float: right;
-			padding-right: 1rem;
 			margin-left: 0;
 		}
 		
 	}
 
 	&__logo{
-		left: 50%;
+		float: left;
+		left: 2rem;;
 		transform: translateX(-50%) scale(.8);
 		transform-origin: 50% 0;
 		position: absolute;
 		
 		padding: 0;
-		top: 0;
+		
 
 		@mixin atMedium{
 			left: auto;
 			transform: translateX(0);
+		}
+
+		&-icon{
+			border-radius: 20px;
+			height: 70px;
+			width: 70px;
+
+			@mixin atMedium{
+				border-radius: 20px;
+			}
+			
+		}
+
+		&-title{
+			display: none;
+
+			@mixin atMedium{
+				display: inline;
+				position: relative;
+				color: #FFF;
+				font-family: Arial, Helvetica, sans-serif;
+				font-weight: bold;
+				bottom: 2.5rem;
+				padding-left: .2rem;
+			}
+			
+
 		}
 	}
 
@@ -120,6 +147,13 @@
 			z-index: 1;
 			padding-top: 0;
 			transform: scale(1);
+		}
+
+		.search-icon{
+			position: relative;
+			height: 40px;
+			width: 40px;
+			bottom: 1rem;
 		}
 
 		&--is-visible{
