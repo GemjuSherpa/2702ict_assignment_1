@@ -60,76 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _MobileMenu = __webpack_require__(1);
-
-var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mobileMenu = new _MobileMenu2.default();
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(2);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var MobileMenu = function () {
-	function MobileMenu() {
-		_classCallCheck(this, MobileMenu);
-
-		this.menuIcon = (0, _jquery2.default)(".site-header__menu-icon");
-		this.menuContent = (0, _jquery2.default)(".site-header__menu-content");
-		this.siteHeader = (0, _jquery2.default)(".site-header");
-		this.event();
-	}
-
-	_createClass(MobileMenu, [{
-		key: "event",
-		value: function event() {
-			this.menuIcon.click(this.toggleTheMenu.bind(this));
-		}
-	}, {
-		key: "toggleTheMenu",
-		value: function toggleTheMenu() {
-			this.menuContent.toggleClass("site-header__menu-content--is-visible");
-			this.siteHeader.toggleClass("site-header--is-expanded");
-			this.menuIcon.toggleClass("site-header__menu-icon--close-x");
-		}
-	}]);
-
-	return MobileMenu;
-}();
-
-exports.default = MobileMenu;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10387,6 +10322,392 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _MobileMenu = __webpack_require__(2);
+
+var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
+
+var _Search = __webpack_require__(3);
+
+var _Search2 = _interopRequireDefault(_Search);
+
+var _LargeHeroImg = __webpack_require__(4);
+
+var _LargeHeroImg2 = _interopRequireDefault(_LargeHeroImg);
+
+var _SportsImg = __webpack_require__(5);
+
+var _SportsImg2 = _interopRequireDefault(_SportsImg);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mobileMenu = new _MobileMenu2.default();
+var search = new _Search2.default();
+var largeHero = new _LargeHeroImg2.default();
+var bodyPhotos = new _SportsImg2.default();
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var MobileMenu = function () {
+	function MobileMenu() {
+		_classCallCheck(this, MobileMenu);
+
+		this.menuIcon = (0, _jquery2.default)(".site-header__menu-icon");
+		this.menuContent = (0, _jquery2.default)(".site-header__menu-content");
+		this.siteHeader = (0, _jquery2.default)(".site-header");
+		this.event();
+	}
+
+	_createClass(MobileMenu, [{
+		key: "event",
+		value: function event() {
+			this.menuIcon.click(this.toggleTheMenu.bind(this));
+		}
+	}, {
+		key: "toggleTheMenu",
+		value: function toggleTheMenu() {
+			this.menuContent.toggleClass("site-header__menu-content--is-visible");
+			this.siteHeader.toggleClass("site-header--is-expanded");
+			this.menuIcon.toggleClass("site-header__menu-icon--close-x");
+		}
+	}]);
+
+	return MobileMenu;
+}();
+
+exports.default = MobileMenu;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Search = function () {
+    //1. Describe and create/initiate object.
+    function Search() {
+        _classCallCheck(this, Search);
+
+        this.addSearchHTML(); //calling html body function of search area. NOTE: this function must call before all other functions.
+        this.resultsDiv = (0, _jquery2.default)("#search-overlay__results");
+        this.openButton = (0, _jquery2.default)(".search-icon");
+        this.closeButton = (0, _jquery2.default)(".search-overlay__close");
+        this.searchOverlay = (0, _jquery2.default)(".search-overlay");
+        this.searchField = (0, _jquery2.default)("#search-term");
+        this.images = [];
+        this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=10&format=json&nojsoncallback=1&";
+        this.events();
+        this.isOverlayOpen = false;
+        this.typingTimer;
+        this.isSpinnerVisible = false;
+        this.previousValue;
+    }
+
+    //2.Events$
+
+
+    _createClass(Search, [{
+        key: "events",
+        value: function events() {
+            this.openButton.on("click", this.openOverlay.bind(this));
+            this.closeButton.on("click", this.closeOverlay.bind(this));
+            (0, _jquery2.default)(document).on("keydown", this.keyPressDispatcher.bind(this));
+            this.searchField.on("keyup", this.typingLogic.bind(this));
+        }
+
+        //3.methodes
+
+    }, {
+        key: "typingLogic",
+        value: function typingLogic() {
+            if (this.searchField.val() != this.previousValue) {
+                clearTimeout(this.typingTimer);
+                if (this.searchField.val()) {
+                    if (!this.isSpinnerVisible) {
+                        this.resultsDiv.html('<div class = "spinner-loader"></div>');
+                        this.isSpinnerVisible = true;
+                    }
+                    this.typingTimer = setTimeout(this.getResults.bind(this), 750);
+                } else {
+                    this.resultsDiv.html('');
+                    this.isSpinnerVisible = false;
+                }
+            }
+
+            this.previousValue = this.searchField.val();
+        }
+
+        //dynamic search result using RESTful api's
+
+    }, {
+        key: "getResults",
+        value: function getResults() {
+            var _this = this;
+
+            //Flicker Rest API's for search functionalities.
+            _jquery2.default.getJSON(this.url + this.API_KEY + "&text=" + this.searchField.val(), function (results) {
+                _this.numImages = results.photos.photo.length;
+                //this.content.empty();
+                for (var i = 0; i < _this.numImages; i++) {
+                    var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
+                    _this.images.push(photoObj);
+                    _this.getSizes(photoObj);
+                    _this.isSpinnerVisible = false;
+                }
+            });
+        }
+    }, {
+        key: "getSizes",
+        value: function getSizes(images) {
+            var _this2 = this;
+
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+                console.log(results);
+                images.thumb = results.sizes.size[4].source;
+                //images.full = results.sizes.size[results.sizes.size.length - 1].source;
+                _this2.resultsDiv.append("\n                <figure class=\"content__photo--img\" data-full=\"" + images.thumb + "\"><img src=\"" + images.thumb + "\" height=\"270px\", width=\"270px\"><figcaption>" + images.title + "</figcaption></figure>\n            ");
+            });
+            this.isSpinnerVisible = false;
+        }
+    }, {
+        key: "keyPressDispatcher",
+        value: function keyPressDispatcher(e) {
+            if (e.keyCode == 83 && !this.isOverlayOpen && !(0, _jquery2.default)('input, textarea').is(':focus')) {
+                this.openOverlay();
+            }
+            if (e.keyCode == 27 && this.isOverlayOpen) {
+                this.closeOverlay();
+            }
+        }
+    }, {
+        key: "openOverlay",
+        value: function openOverlay() {
+            var _this3 = this;
+
+            this.searchOverlay.addClass("search-overlay--active");
+            setTimeout(function () {
+                return _this3.searchField.focus();
+            }, 301);
+            this.searchField.val('');
+            (0, _jquery2.default)("body").addClass("body-no-scroll");
+            this.isOverlayOpen = true;
+        }
+    }, {
+        key: "closeOverlay",
+        value: function closeOverlay() {
+            this.searchOverlay.removeClass("search-overlay--active");
+            (0, _jquery2.default)("body").removeClass("body-no-scroll");
+            this.isOverlayOpen = false;
+        }
+
+        // HTML body to append search area and results
+
+    }, {
+        key: "addSearchHTML",
+        value: function addSearchHTML() {
+            (0, _jquery2.default)("body").append("\n\t\t\t<div class=\"search-overlay\">\n\t\t\t    <div class=\"search-overlay__top\">\n\t\t\t      <div class=\"container\">\n                    <i class=\"fa fa-search search-overlay__icon\" aria-hidden=\"true\"><img src=\"assets/images/icons/overlay-search.png\" height=\"50px\" width=\"50px\"></i>\n\t\t\t        <input type=\"text\" name=\"\" class=\"search-term\" placeholder=\"What are you looking for?\" id=\"search-term\">\n\t\t\t        <span class=\"fa fa-window-close search-overlay__close\" aria-hidden=\"true\">&times</span>\n\t\t\t      </div>\n\t\t\t    </div>\n\t\t\t    <div class=\"container\">\n\t\t\t      <div id=\"search-overlay__results\">\n\t\t\t        \n\t\t\t      </div>\n\t\t\t    </div>\n\t\t\t</div>\n\t\t");
+        }
+    }]);
+
+    return Search;
+}();
+
+exports.default = Search;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LargeHeroImg = function () {
+    //Constructor
+    function LargeHeroImg() {
+        _classCallCheck(this, LargeHeroImg);
+
+        this.contentDiv = (0, _jquery2.default)('picture');
+        this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.interestingness.getList&format=json&nojsoncallback=1&per_page=20";
+        this.events();
+        //this.getResults();
+    }
+
+    // All the Events..
+
+
+    _createClass(LargeHeroImg, [{
+        key: 'events',
+        value: function events() {
+            (0, _jquery2.default)(window).on("load", this.getResults.bind(this));
+        }
+
+        //All the methodes..
+
+    }, {
+        key: 'getResults',
+        value: function getResults() {
+            var _this = this;
+
+            _jquery2.default.getJSON(this.url + "&" + this.API_KEY, function (results) {
+
+                //console.log(results);
+                var photoId = results.photos.photo[0].id;
+                var photoTitle = results.photos.photo[0].title;
+                _this.getSizes(photoId);
+            });
+        }
+
+        //get photo url
+
+    }, {
+        key: 'getSizes',
+        value: function getSizes(photoId) {
+            var _this2 = this;
+
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoId;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+                //console.log(results);
+                //this.contentDiv.empty();
+                var largehero = results.sizes.size.length;
+                _this2.contentDiv.append('\n                <img src="' + results.sizes.size[largehero - 4].source + '" media="(min-width: 640px; min-height: 600px)" class="large-hero__image">\n            ');
+            });
+        }
+    }]);
+
+    return LargeHeroImg;
+}();
+
+exports.default = LargeHeroImg;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var SportsImg = function () {
+    function SportsImg() {
+        _classCallCheck(this, SportsImg);
+
+        this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
+        this.content = (0, _jquery2.default)(".page-section__photo-page");
+        this.images = [];
+        this.events();
+    }
+
+    _createClass(SportsImg, [{
+        key: "events",
+        value: function events() {
+            (0, _jquery2.default)(window).on("load", this.getResults.bind(this));
+        }
+    }, {
+        key: "getResults",
+        value: function getResults() {
+            var _this = this;
+
+            _jquery2.default.getJSON(this.url + this.API_KEY + "&text=sports", function (results) {
+                _this.numImages = results.photos.photo.length;
+                //this.content.empty();
+                for (var i = 0; i < _this.numImages; i++) {
+                    var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
+                    _this.images.push(photoObj);
+                    _this.getSizes(photoObj);
+                }
+            });
+        }
+    }, {
+        key: "getSizes",
+        value: function getSizes(images) {
+            var _this2 = this;
+
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+                //console.log(results);
+                images.thumb = results.sizes.size[3].source;
+                //images.full = results.sizes.size[results.sizes.size.length - 1].source;
+                _this2.content.append("\n                <figure class=\"content__photo--img\" data-full=\"" + images.thumb + "\"><img src=\"" + images.thumb + "\" height=\"270px\", width=\"270px\"><figcaption>" + images.title + "</figcaption></figure>\n            ");
+            });
+        }
+    }]);
+
+    return SportsImg;
+}();
+
+exports.default = SportsImg;
 
 /***/ })
 /******/ ]);

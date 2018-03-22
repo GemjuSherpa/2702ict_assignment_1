@@ -1,9 +1,28 @@
 .page-section {
-	padding: 1.2rem 0;
+	padding: 0;
 
 	&--blue{
 		background-color: $mainBlue;
 		color: #FFF
+	}
+	&__imgTitle{
+		text-align: center;
+		color: $mainBlue;
+	}
+
+	&__photo-page{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center; 
+		
+		@mixin atMedium{
+			padding-left: 1rem;
+			padding-top: 1rem;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
 	}
 
 /*testimonial section styles */
@@ -18,7 +37,8 @@
 	}
 
 	@mixin atMedium{
-		padding: 4.5rem 0;
+		padding: 1.5rem 0;
+		background-color: rgba($beige, .2);
 	}
 
 	&--no-b-padding-until-medium{
