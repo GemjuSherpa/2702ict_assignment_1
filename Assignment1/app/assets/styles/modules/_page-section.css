@@ -14,16 +14,28 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center; 
+		background-color: rgba($mainBlue, .2);
 		
 		@mixin atMedium{
-			padding-left: 1rem;
-			padding-top: 1rem;
+			
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
+			background-color: rgba($mainBlue, .2);
+			
+		}
+
+		@mixin atLarge{
+			
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			background-color: rgba($mainBlue, .2);
+			
 		}
 
 	}
+
 
 /*testimonial section styles */
 	&--testimonials{

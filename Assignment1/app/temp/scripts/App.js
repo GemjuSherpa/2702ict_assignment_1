@@ -10330,6 +10330,10 @@ return jQuery;
 "use strict";
 
 
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
 var _MobileMenu = __webpack_require__(2);
 
 var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
@@ -10346,12 +10350,24 @@ var _SportsImg = __webpack_require__(5);
 
 var _SportsImg2 = _interopRequireDefault(_SportsImg);
 
+var _MostPopular = __webpack_require__(6);
+
+var _MostPopular2 = _interopRequireDefault(_MostPopular);
+
+var _Categories = __webpack_require__(7);
+
+var _Categories2 = _interopRequireDefault(_Categories);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mobileMenu = new _MobileMenu2.default();
-var search = new _Search2.default();
-var largeHero = new _LargeHeroImg2.default();
-var bodyPhotos = new _SportsImg2.default();
+(0, _jquery2.default)(document).ready(function () {
+    var mobileMenu = new _MobileMenu2.default();
+    var search = new _Search2.default();
+    var largeHero = new _LargeHeroImg2.default();
+    var bodyPhotos = new _SportsImg2.default();
+    //var popular = new MostPopular();
+    var categories = new _Categories2.default();
+});
 
 /***/ }),
 /* 2 */
@@ -10585,9 +10601,8 @@ var LargeHeroImg = function () {
 
         this.contentDiv = (0, _jquery2.default)('picture');
         this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
-        this.url = "https://api.flickr.com/services/rest/?method=flickr.interestingness.getList&format=json&nojsoncallback=1&per_page=20";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&per_page=20";
         this.events();
-        //this.getResults();
     }
 
     // All the Events..
@@ -10606,7 +10621,7 @@ var LargeHeroImg = function () {
         value: function getResults() {
             var _this = this;
 
-            _jquery2.default.getJSON(this.url + "&" + this.API_KEY, function (results) {
+            _jquery2.default.getJSON(this.url + "&" + this.API_KEY + "&text=sports", function (results) {
 
                 //console.log(results);
                 var photoId = results.photos.photo[0].id;
@@ -10624,11 +10639,12 @@ var LargeHeroImg = function () {
 
             var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoId;
             _jquery2.default.getJSON(photoIdUrl, function (results) {
-                //console.log(results);
+                console.log(results);
                 //this.contentDiv.empty();
                 var largehero = results.sizes.size.length;
-                _this2.contentDiv.append('\n                <img src="' + results.sizes.size[largehero - 4].source + '" media="(min-width: 640px; min-height: 600px)" class="large-hero__image">\n            ');
+                _this2.contentDiv.append('\n                <img src="' + results.sizes.size[largehero - 1].source + '" media="(min-width: 640px; min-height: 600px)" class="large-hero__image">\n            ');
             });
+            this.contentDiv.empty();
         }
     }]);
 
@@ -10696,10 +10712,14 @@ var SportsImg = function () {
 
             var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
             _jquery2.default.getJSON(photoIdUrl, function (results) {
-                //console.log(results);
-                images.thumb = results.sizes.size[3].source;
+                console.log(results);
+
+                images.thumb = results.sizes.size[4].source;
+                if (images.thumb == false) {
+                    images.thumb = results.sizes.size[3].source;
+                }
                 //images.full = results.sizes.size[results.sizes.size.length - 1].source;
-                _this2.content.append("\n                <figure class=\"content__photo--img\" data-full=\"" + images.thumb + "\"><img src=\"" + images.thumb + "\" height=\"270px\", width=\"270px\"><figcaption>" + images.title + "</figcaption></figure>\n            ");
+                _this2.content.append("\n                <figure class=\"content__photo--img\" data-full=\"" + images.thumb + "\"><img src=\"" + images.thumb + "\" height=\"290px\", width=\"300px\"><figcaption>" + images.title + "</figcaption></figure>\n            ");
             });
         }
     }]);
@@ -10708,6 +10728,268 @@ var SportsImg = function () {
 }();
 
 exports.default = SportsImg;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var MostPopular = function () {
+    function MostPopular() {
+        _classCallCheck(this, MostPopular);
+
+        this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
+        this.content = (0, _jquery2.default)(".page-section__photo-page");
+        this.btn = (0, _jquery2.default)(".btn--orange");
+        this.images = [];
+        this.events();
+    }
+
+    _createClass(MostPopular, [{
+        key: "events",
+        value: function events() {
+            this.btn.on("click", this.getResults.bind(this));
+        }
+    }, {
+        key: "getResults",
+        value: function getResults() {
+            var _this = this;
+
+            _jquery2.default.getJSON(this.url + this.API_KEY + "&text=sports", function (results) {
+                _this.numImages = results.photos.photo.length;
+                //this.content.empty();
+                for (var i = 0; i < _this.numImages; i++) {
+                    var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
+                    _this.images.push(photoObj);
+                    _this.getPopular(photoObj);
+                }
+            });
+        }
+    }, {
+        key: "getPopular",
+        value: function getPopular(images) {
+            var _this2 = this;
+
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getPopular&format=json&nojsoncallback=1&" + this.API_KEY;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+                console.log(results);
+                images.thumb = results.sizes.size[4].source;
+                //images.full = results.sizes.size[results.sizes.size.length - 1].source;
+                _this2.content.append("\n                <figure class=\"content__photo--img\" data-full=\"" + images.thumb + "\"><img src=\"" + images.thumb + "\" height=\"270px\", width=\"270px\"><figcaption>" + images.title + "</figcaption></figure>\n            ");
+            });
+        }
+    }]);
+
+    return MostPopular;
+}();
+
+exports.default = MostPopular;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _largeHeroImg = __webpack_require__(8);
+
+var _largeHeroImg2 = _interopRequireDefault(_largeHeroImg);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Categories = function () {
+    //All constructors
+    function Categories() {
+        _classCallCheck(this, Categories);
+
+        this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
+        this.content = (0, _jquery2.default)(".page-section__photo-page");
+        this.contentDiv = (0, _jquery2.default)('picture');
+        this.t = (0, _jquery2.default)(".tenis");
+        this.f = (0, _jquery2.default)(".football");
+        this.s = (0, _jquery2.default)(".swimming");
+        this.b = (0, _jquery2.default)(".basketball");
+
+        this.skey = ["tennis", "football, FIFA", "swimming", "basketball"];
+
+        this.recent = [];
+        this.images = [];
+        this.events();
+    }
+
+    //Events triggred.
+
+
+    _createClass(Categories, [{
+        key: 'events',
+        value: function events() {
+            this.t.click([this.skey[0]], this.getResults.bind(this));
+            this.f.click([this.skey[1]], this.getResults.bind(this));
+            this.s.click([this.skey[2]], this.getResults.bind(this));
+            this.b.click([this.skey[3]], this.getResults.bind(this));
+        }
+        // All Methodes
+        //flikr.photos.search query.
+
+    }, {
+        key: 'getResults',
+        value: function getResults(evt) {
+            var _this = this;
+
+            var text = evt.data[0];
+            var largeHero = new _largeHeroImg2.default();
+
+            _jquery2.default.getJSON(this.url + this.API_KEY + "&text=" + text, function (results) {
+                _this.numImages = results.photos.photo.length;
+                var photoId = results.photos.photo[0].id;
+                for (var i = 0; i < _this.numImages; i++) {
+                    var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
+                    _this.images.push(photoObj);
+                    _this.getSizes(photoObj);
+                }
+                largeHero.getSizes(photoId);
+            });
+        }
+
+        //flikr.photos.getSizes query
+
+    }, {
+        key: 'getSizes',
+        value: function getSizes(images) {
+            var _this2 = this;
+
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+
+                //images.thumb = results.sizes.size[4].source;
+                if (results.sizes.size[4].source == true) {
+                    images.thumb = results.sizes.size[4].source;
+                } else {
+                    images.thumb = results.sizes.size[3].source;
+                }
+                //images.full = results.sizes.size[results.sizes.size.length - 1].source;
+                console.log(images.full);
+                _this2.content.append('\n                <figure class="content__photo--img" data-full="' + images.thumb + '"><img src="' + images.thumb + '" height="290px", width="300px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
+            });
+            this.content.empty();
+        }
+    }]);
+
+    return Categories;
+}();
+
+exports.default = Categories;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LargeHeroImg = function () {
+    //Constructor
+    function LargeHeroImg() {
+        _classCallCheck(this, LargeHeroImg);
+
+        this.contentDiv = (0, _jquery2.default)('picture');
+        this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&per_page=20";
+        this.events();
+    }
+
+    // All the Events..
+
+
+    _createClass(LargeHeroImg, [{
+        key: 'events',
+        value: function events() {
+            (0, _jquery2.default)(window).on("load", this.getResults.bind(this));
+        }
+
+        //All the methodes..
+
+    }, {
+        key: 'getResults',
+        value: function getResults() {
+            var _this = this;
+
+            _jquery2.default.getJSON(this.url + "&" + this.API_KEY + "&text=sports", function (results) {
+
+                //console.log(results);
+                var photoId = results.photos.photo[0].id;
+                var photoTitle = results.photos.photo[0].title;
+                _this.getSizes(photoId);
+            });
+        }
+
+        //get photo url
+
+    }, {
+        key: 'getSizes',
+        value: function getSizes(photoId) {
+            var _this2 = this;
+
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoId;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+                console.log(results);
+                //this.contentDiv.empty();
+                var largehero = results.sizes.size.length;
+                _this2.contentDiv.append('\n                <img src="' + results.sizes.size[largehero - 1].source + '" media="(min-width: 640px; min-height: 600px)" class="large-hero__image">\n            ');
+            });
+            this.contentDiv.empty();
+        }
+    }]);
+
+    return LargeHeroImg;
+}();
+
+exports.default = LargeHeroImg;
 
 /***/ })
 /******/ ]);
