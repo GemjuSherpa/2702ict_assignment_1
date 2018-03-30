@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import Modal from './modal';
 
 class Search {
     //1. Describe and create/initiate object.
@@ -75,10 +76,16 @@ class Search {
             images.thumb = results.sizes.size[4].source;
             //images.full = results.sizes.size[results.sizes.size.length - 1].source;
             this.resultsDiv.append(`
-                <figure class="content__photo--img" data-full="${images.thumb}"><img src="${images.thumb}" height="270px", width="270px"><figcaption>${images.title}</figcaption></figure>
+                <figure class="content__photo--img" data-full="${images.thumb}" data-title="${images.title}"><img src="${images.thumb}" height="270px", width="270px"><figcaption>${images.title}</figcaption></figure>
             `);
             
-            
+            $("figure").click((event) => {
+                var imgsrc = event.currentTarget.dataset.full;
+                var imgtitle = event.currentTarget.dataset.title;
+                //console.log(event);
+                var modal = new Modal();
+                modal.openModal(imgsrc, imgtitle);
+            })
         });
         this.isSpinnerVisible = false;
     }

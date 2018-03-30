@@ -11,17 +11,21 @@
 	}
 
 	&__photo-page{
-		display: flex;
+		/* display: flex;
 		flex-wrap: wrap;
-		justify-content: center; 
+		justify-content: center;  */
+		width: 100%;
+		display: block;
+		text-align: center;
 		background-color: rgba($mainBlue, .2);
+
 		
 		@mixin atMedium{
-			
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
 			background-color: rgba($mainBlue, .2);
+			cursor: pointer;
 			
 		}
 
@@ -32,6 +36,17 @@
 			justify-content: center;
 			background-color: rgba($mainBlue, .2);
 			
+		}
+
+		&--img{
+			position: relative;
+			display: inline;
+
+			@mixin atMedium{
+				height: 270px;
+				width: 300px;
+
+			}
 		}
 
 	}

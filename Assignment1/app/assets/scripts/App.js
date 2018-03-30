@@ -6,6 +6,7 @@ import LargeHeroImg from './modules/LargeHeroImg';
 import SportsImg from './modules/SportsImg';
 import MostPopular from './modules/MostPopular';
 import Categories from './modules/Categories';
+import Modal from './modules/Modal';
 
 
 
@@ -16,6 +17,7 @@ $(document).ready(function () {
     var bodyPhotos = new SportsImg();
     //var popular = new MostPopular();
     var categories = new Categories();
+    // var modal = new Modal();
    
 });
 

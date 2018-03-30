@@ -157,7 +157,7 @@
 .content__photo--img{
     display: flex;
     flex-direction: column;
-    
+    cursor: pointer;
 
 
 

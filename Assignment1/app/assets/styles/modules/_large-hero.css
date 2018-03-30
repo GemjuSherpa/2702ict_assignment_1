@@ -5,7 +5,13 @@
 	&__image {
 		display: block;
 		width: 100%;
-		height: 630px;
+		height: 330px;
+
+		@mixin atMedium{
+			display: block;
+			width: 100%;
+			height: 630px;
+		}
 	}
 
 	&__text-content {
@@ -24,13 +30,9 @@
 
 	&__title {
 		font-weight: 300;
-		color: $mainBlue;
+		color: $darkOrange;
 		font-size: 2.4rem;
 		margin: 0;
-
-		@mixin atSmall {
-			font-size: 4.4rem;
-		}
 
 		@mixin atMedium {
 			font-size: 3.2rem;
@@ -45,12 +47,19 @@
 
 	&__subtitle {
 		font-weight: 300;
-		color: $mainBlue;
+		color: $darkOrange;
 		font-size: 1.5rem;
 		margin: 0;
 
-		@mixin atSmall {
-			font-size: 2.9rem;
+		@mixin atSmall{
+			font-size: 2rem;
+		}
+		@mixin atMedium {
+			font-size: 2.5rem;
+		}
+
+		@mixin atLarge{
+			font-size: 3rem
 		}
 	}
 	&__description {

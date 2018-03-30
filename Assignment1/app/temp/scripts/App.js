@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10330,33 +10330,108 @@ return jQuery;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _MobileMenu = __webpack_require__(2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Modal = function () {
+    function Modal() {
+        _classCallCheck(this, Modal);
+
+        this.openModalButton = (0, _jquery2.default)(".page-section__photo-page");
+        this.modal = (0, _jquery2.default)(".modal");
+        this.closeModalButton = (0, _jquery2.default)(".modal__close");
+        this.imgModal = (0, _jquery2.default)(".modal__inner--img");
+        this.imgTitle = (0, _jquery2.default)(".modal__inner--caption");
+        this.events();
+    }
+
+    _createClass(Modal, [{
+        key: "events",
+        value: function events() {
+            // clicking the open modal button
+            //this.openModalButton.click(this.openModal.bind(this));
+
+            // clicking the x close modal button
+            this.closeModalButton.click(this.closeModal.bind(this));
+
+            // pushes any key
+            (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
+        }
+    }, {
+        key: "keyPressHandler",
+        value: function keyPressHandler(e) {
+            if (e.keyCode == 27) {
+                this.closeModal();
+            }
+        }
+    }, {
+        key: "openModal",
+        value: function openModal(imgsrc, imgtitle) {
+            this.modal.addClass("modal--is-visible");
+            this.imgModal.attr('src', imgsrc);
+            this.imgTitle.text(imgtitle);
+        }
+    }, {
+        key: "closeModal",
+        value: function closeModal() {
+            this.modal.removeClass("modal--is-visible");
+        }
+    }]);
+
+    return Modal;
+}();
+
+exports.default = Modal;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _MobileMenu = __webpack_require__(3);
 
 var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
 
-var _Search = __webpack_require__(3);
+var _Search = __webpack_require__(4);
 
 var _Search2 = _interopRequireDefault(_Search);
 
-var _LargeHeroImg = __webpack_require__(4);
+var _LargeHeroImg = __webpack_require__(5);
 
 var _LargeHeroImg2 = _interopRequireDefault(_LargeHeroImg);
 
-var _SportsImg = __webpack_require__(5);
+var _SportsImg = __webpack_require__(6);
 
 var _SportsImg2 = _interopRequireDefault(_SportsImg);
 
-var _MostPopular = __webpack_require__(6);
+var _MostPopular = __webpack_require__(7);
 
 var _MostPopular2 = _interopRequireDefault(_MostPopular);
 
-var _Categories = __webpack_require__(7);
+var _Categories = __webpack_require__(8);
 
 var _Categories2 = _interopRequireDefault(_Categories);
+
+var _Modal = __webpack_require__(10);
+
+var _Modal2 = _interopRequireDefault(_Modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10367,10 +10442,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var bodyPhotos = new _SportsImg2.default();
     //var popular = new MostPopular();
     var categories = new _Categories2.default();
+    // var modal = new Modal();
 });
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10420,7 +10496,7 @@ var MobileMenu = function () {
 exports.default = MobileMenu;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10435,6 +10511,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
+
+var _modal = __webpack_require__(1);
+
+var _modal2 = _interopRequireDefault(_modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10465,7 +10545,7 @@ var Search = function () {
 
 
     _createClass(Search, [{
-        key: "events",
+        key: 'events',
         value: function events() {
             this.openButton.on("click", this.openOverlay.bind(this));
             this.closeButton.on("click", this.closeOverlay.bind(this));
@@ -10476,7 +10556,7 @@ var Search = function () {
         //3.methodes
 
     }, {
-        key: "typingLogic",
+        key: 'typingLogic',
         value: function typingLogic() {
             if (this.searchField.val() != this.previousValue) {
                 clearTimeout(this.typingTimer);
@@ -10498,7 +10578,7 @@ var Search = function () {
         //dynamic search result using RESTful api's
 
     }, {
-        key: "getResults",
+        key: 'getResults',
         value: function getResults() {
             var _this = this;
 
@@ -10515,7 +10595,7 @@ var Search = function () {
             });
         }
     }, {
-        key: "getSizes",
+        key: 'getSizes',
         value: function getSizes(images) {
             var _this2 = this;
 
@@ -10524,12 +10604,20 @@ var Search = function () {
                 console.log(results);
                 images.thumb = results.sizes.size[4].source;
                 //images.full = results.sizes.size[results.sizes.size.length - 1].source;
-                _this2.resultsDiv.append("\n                <figure class=\"content__photo--img\" data-full=\"" + images.thumb + "\"><img src=\"" + images.thumb + "\" height=\"270px\", width=\"270px\"><figcaption>" + images.title + "</figcaption></figure>\n            ");
+                _this2.resultsDiv.append('\n                <figure class="content__photo--img" data-full="' + images.thumb + '" data-title="' + images.title + '"><img src="' + images.thumb + '" height="270px", width="270px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
+
+                (0, _jquery2.default)("figure").click(function (event) {
+                    var imgsrc = event.currentTarget.dataset.full;
+                    var imgtitle = event.currentTarget.dataset.title;
+                    //console.log(event);
+                    var modal = new _modal2.default();
+                    modal.openModal(imgsrc, imgtitle);
+                });
             });
             this.isSpinnerVisible = false;
         }
     }, {
-        key: "keyPressDispatcher",
+        key: 'keyPressDispatcher',
         value: function keyPressDispatcher(e) {
             if (e.keyCode == 83 && !this.isOverlayOpen && !(0, _jquery2.default)('input, textarea').is(':focus')) {
                 this.openOverlay();
@@ -10539,7 +10627,7 @@ var Search = function () {
             }
         }
     }, {
-        key: "openOverlay",
+        key: 'openOverlay',
         value: function openOverlay() {
             var _this3 = this;
 
@@ -10552,7 +10640,7 @@ var Search = function () {
             this.isOverlayOpen = true;
         }
     }, {
-        key: "closeOverlay",
+        key: 'closeOverlay',
         value: function closeOverlay() {
             this.searchOverlay.removeClass("search-overlay--active");
             (0, _jquery2.default)("body").removeClass("body-no-scroll");
@@ -10562,9 +10650,9 @@ var Search = function () {
         // HTML body to append search area and results
 
     }, {
-        key: "addSearchHTML",
+        key: 'addSearchHTML',
         value: function addSearchHTML() {
-            (0, _jquery2.default)("body").append("\n\t\t\t<div class=\"search-overlay\">\n\t\t\t    <div class=\"search-overlay__top\">\n\t\t\t      <div class=\"container\">\n                    <i class=\"fa fa-search search-overlay__icon\" aria-hidden=\"true\"><img src=\"assets/images/icons/overlay-search.png\" height=\"50px\" width=\"50px\"></i>\n\t\t\t        <input type=\"text\" name=\"\" class=\"search-term\" placeholder=\"What are you looking for?\" id=\"search-term\">\n\t\t\t        <span class=\"fa fa-window-close search-overlay__close\" aria-hidden=\"true\">&times</span>\n\t\t\t      </div>\n\t\t\t    </div>\n\t\t\t    <div class=\"container\">\n\t\t\t      <div id=\"search-overlay__results\">\n\t\t\t        \n\t\t\t      </div>\n\t\t\t    </div>\n\t\t\t</div>\n\t\t");
+            (0, _jquery2.default)("body").append('\n\t\t\t<div class="search-overlay">\n\t\t\t    <div class="search-overlay__top">\n\t\t\t      <div class="container">\n                    <i class="fa fa-search search-overlay__icon" aria-hidden="true"><img src="assets/images/icons/overlay-search.png" height="50px" width="50px"></i>\n\t\t\t        <input type="text" name="" class="search-term" placeholder="What are you looking for?" id="search-term">\n\t\t\t        <span class="fa fa-window-close search-overlay__close" aria-hidden="true">&times</span>\n\t\t\t      </div>\n\t\t\t    </div>\n\t\t\t    <div class="container">\n\t\t\t      <div id="search-overlay__results">\n\t\t\t        \n\t\t\t      </div>\n\t\t\t    </div>\n\t\t\t</div>\n\t\t');
         }
     }]);
 
@@ -10574,7 +10662,7 @@ var Search = function () {
 exports.default = Search;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10654,7 +10742,7 @@ var LargeHeroImg = function () {
 exports.default = LargeHeroImg;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10669,6 +10757,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
+
+var _modal = __webpack_require__(1);
+
+var _modal2 = _interopRequireDefault(_modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10686,12 +10778,12 @@ var SportsImg = function () {
     }
 
     _createClass(SportsImg, [{
-        key: "events",
+        key: 'events',
         value: function events() {
             (0, _jquery2.default)(window).on("load", this.getResults.bind(this));
         }
     }, {
-        key: "getResults",
+        key: 'getResults',
         value: function getResults() {
             var _this = this;
 
@@ -10706,20 +10798,26 @@ var SportsImg = function () {
             });
         }
     }, {
-        key: "getSizes",
+        key: 'getSizes',
         value: function getSizes(images) {
             var _this2 = this;
 
             var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
             _jquery2.default.getJSON(photoIdUrl, function (results) {
                 console.log(results);
-
                 images.thumb = results.sizes.size[4].source;
                 if (images.thumb == false) {
                     images.thumb = results.sizes.size[3].source;
                 }
-                //images.full = results.sizes.size[results.sizes.size.length - 1].source;
-                _this2.content.append("\n                <figure class=\"content__photo--img\" data-full=\"" + images.thumb + "\"><img src=\"" + images.thumb + "\" height=\"290px\", width=\"300px\"><figcaption>" + images.title + "</figcaption></figure>\n            ");
+                images.full = results.sizes.size[results.sizes.size.length - 1].source;
+                _this2.content.append('\n                <figure class="content__photo--img" data-full = "' + images.full + '"  data-title = "' + images.title + '"><img class="page-section__photo-page--img" src="' + images.thumb + '" height="270px", width="270px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
+                (0, _jquery2.default)("figure").click(function (event) {
+                    var imgsrc = event.currentTarget.dataset.full;
+                    var imgtitle = event.currentTarget.dataset.title;
+                    //console.log(event);
+                    var modal = new _modal2.default();
+                    modal.openModal(imgsrc, imgtitle);
+                });
             });
         }
     }]);
@@ -10730,7 +10828,7 @@ var SportsImg = function () {
 exports.default = SportsImg;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10803,7 +10901,7 @@ var MostPopular = function () {
 exports.default = MostPopular;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10819,9 +10917,13 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _largeHeroImg = __webpack_require__(8);
+var _largeHeroImg = __webpack_require__(9);
 
 var _largeHeroImg2 = _interopRequireDefault(_largeHeroImg);
+
+var _modal = __webpack_require__(1);
+
+var _modal2 = _interopRequireDefault(_modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10880,6 +10982,7 @@ var Categories = function () {
                 }
                 largeHero.getSizes(photoId);
             });
+            return false;
         }
 
         //flikr.photos.getSizes query
@@ -10900,7 +11003,14 @@ var Categories = function () {
                 }
                 //images.full = results.sizes.size[results.sizes.size.length - 1].source;
                 console.log(images.full);
-                _this2.content.append('\n                <figure class="content__photo--img" data-full="' + images.thumb + '"><img src="' + images.thumb + '" height="290px", width="300px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
+                _this2.content.append('\n                <figure class="content__photo--img" data-full="' + images.thumb + '" data-title ="' + images.title + '"><img src="' + images.thumb + '" height="290px", width="300px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
+                (0, _jquery2.default)("figure").click(function (event) {
+                    var imgsrc = event.currentTarget.dataset.full;
+                    var imgtitle = event.currentTarget.dataset.title;
+                    //console.log(event);
+                    var modal = new _modal2.default();
+                    modal.openModal(imgsrc, imgtitle);
+                });
             });
             this.content.empty();
         }
@@ -10912,7 +11022,7 @@ var Categories = function () {
 exports.default = Categories;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10990,6 +11100,77 @@ var LargeHeroImg = function () {
 }();
 
 exports.default = LargeHeroImg;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Modal = function () {
+    function Modal() {
+        _classCallCheck(this, Modal);
+
+        this.openModalButton = (0, _jquery2.default)(".page-section__photo-page");
+        this.modal = (0, _jquery2.default)(".modal");
+        this.closeModalButton = (0, _jquery2.default)(".modal__close");
+        this.imgModal = (0, _jquery2.default)(".modal__inner--img");
+        this.imgTitle = (0, _jquery2.default)(".modal__inner--caption");
+        this.events();
+    }
+
+    _createClass(Modal, [{
+        key: "events",
+        value: function events() {
+            // clicking the open modal button
+            //this.openModalButton.click(this.openModal.bind(this));
+
+            // clicking the x close modal button
+            this.closeModalButton.click(this.closeModal.bind(this));
+
+            // pushes any key
+            (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
+        }
+    }, {
+        key: "keyPressHandler",
+        value: function keyPressHandler(e) {
+            if (e.keyCode == 27) {
+                this.closeModal();
+            }
+        }
+    }, {
+        key: "openModal",
+        value: function openModal(imgsrc, imgtitle) {
+            this.modal.addClass("modal--is-visible");
+            this.imgModal.attr('src', imgsrc);
+            this.imgTitle.text(imgtitle);
+        }
+    }, {
+        key: "closeModal",
+        value: function closeModal() {
+            this.modal.removeClass("modal--is-visible");
+        }
+    }]);
+
+    return Modal;
+}();
+
+exports.default = Modal;
 
 /***/ })
 /******/ ]);

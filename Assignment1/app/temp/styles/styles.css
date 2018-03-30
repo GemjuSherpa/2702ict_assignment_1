@@ -460,7 +460,16 @@ template {
 .large-hero__image {
 		display: block;
 		width: 100%;
-		height: 630px;
+		height: 330px;
+	}
+
+@media(min-width: 776px){
+
+.large-hero__image {
+			display: block;
+			width: 100%;
+			height: 630px
+	}
 	}
 
 .large-hero__text-content {
@@ -483,20 +492,11 @@ template {
 
 .large-hero__title {
 		font-weight: 300;
-		color: #2f5572;
+		color: #F95738;
 		font-size: 2.4rem;
 		margin: 0;
 
 
-	}
-
-@media(min-width: 414px){
-
-.large-hero__title {
-			font-size: 4.4rem
-
-
-	}
 	}
 
 @media(min-width: 776px){
@@ -519,7 +519,7 @@ template {
 
 .large-hero__subtitle {
 		font-weight: 300;
-		color: #2f5572;
+		color: #F95738;
 		font-size: 1.5rem;
 		margin: 0;
 	}
@@ -527,7 +527,21 @@ template {
 @media(min-width: 414px){
 
 .large-hero__subtitle {
-			font-size: 2.9rem
+			font-size: 2rem
+	}
+	}
+
+@media(min-width: 776px){
+
+.large-hero__subtitle {
+			font-size: 2.5rem
+	}
+	}
+
+@media(min-width: 1042px){
+
+.large-hero__subtitle {
+			font-size: 3rem
 	}
 	}
 
@@ -562,9 +576,10 @@ a{
 
 figure{
 	text-align: center;
-	width: 270px;
-	height: 270px;
+	width: 300px;
+	height: 300px;
 	overflow: hidden;
+
 }
 
 .search-overlay {
@@ -776,7 +791,7 @@ figure{
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    
+    cursor: pointer;
 
 
 
@@ -931,14 +946,12 @@ figure{
 	}
 
 .page-section__photo-page{
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-		-ms-flex-wrap: wrap;
-		    flex-wrap: wrap;
-		-webkit-box-pack: center;
-		    -ms-flex-pack: center;
-		        justify-content: center; 
+		/* display: flex;
+		flex-wrap: wrap;
+		justify-content: center;  */
+		width: 100%;
+		display: block;
+		text-align: center;
 		background-color: rgba(47,85,114, .2);
 
 	}
@@ -946,18 +959,16 @@ figure{
 @media(min-width: 776px){
 
 .page-section__photo-page{
-			
 			display: -webkit-box;
-			
 			display: -ms-flexbox;
-			
 			display: flex;
 			-ms-flex-wrap: wrap;
 			    flex-wrap: wrap;
 			-webkit-box-pack: center;
 			    -ms-flex-pack: center;
 			        justify-content: center;
-			background-color: rgba(47,85,114, .2)
+			background-color: rgba(47,85,114, .2);
+			cursor: pointer
 
 	}
 	}
@@ -979,6 +990,19 @@ figure{
 			background-color: rgba(47,85,114, .2)
 
 	}
+	}
+
+.page-section__photo-page--img{
+			position: relative;
+			display: inline;
+		}
+
+@media(min-width: 776px){
+
+.page-section__photo-page--img{
+				height: 270px;
+				width: 300px
+		}
 	}
 
 /*testimonial section styles */
@@ -1264,7 +1288,68 @@ figure{
 	}
 	}
 
-/*@import "modules/_feature-item";*/
+.modal {
+  position: fixed;
+  z-index: 99999;
+  background-color: rgba(255, 255, 255, .94);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-transition: all .3s ease-out;
+  transition: all .3s ease-out;
+}
+
+.modal--is-visible {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+
+.modal__inner {
+    position: absolute;
+    width: 80%;
+    top: 1rem;
+    left: 50%;
+    bottom: 2rem;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+
+.modal__inner--img{
+        position: relative;
+        width: 100%;
+        height: 90%;
+        display: block;
+    }
+
+.modal__inner--caption{
+        text-align: center;
+        color: #F95738;
+
+    }
+
+.modal__close {
+    position: absolute;
+    top: 15px;
+    right: 100px;
+    font-size: 2rem;
+    -webkit-transform: scaleX(1.2);
+            transform: scaleX(1.2);
+    -webkit-transform-origin: 100% 0;
+            transform-origin: 100% 0;
+    color: #2f5572;
+    cursor: pointer;
+  }
+
+.modal__close:hover {
+      color: #d59541;
+    }
 
 .testimonial{
 	background-color: rgba(255, 255, 255, .8);
@@ -1432,10 +1517,10 @@ Instead, edit gulp/templates/sprite.css */
 .site-header{
 	position: fixed;
 	top: 0;
-	z-index: 9999;
+	z-index: 9;
 	width: 100%;
 	padding: 10px 0;
-	background-color: rgba(47,85,114, .6);
+	/* background-color: rgba($mainBlue, .2); */
 	-webkit-transition: background-color .3s ease-out;
 	transition: background-color .3s ease-out;
 
@@ -1448,7 +1533,8 @@ Instead, edit gulp/templates/sprite.css */
 @media(min-width: 776px){
 
 .site-header{
-		background-color: rgba(47,85,114, .2)
+		background-color: rgba(47,85,114, .6);
+		width: 100%
 
 }
 	}
@@ -1471,7 +1557,6 @@ Instead, edit gulp/templates/sprite.css */
 		-webkit-transform-origin: 50% 0;
 		        transform-origin: 50% 0;
 		position: absolute;
-		
 		padding: 0;
 	}
 
@@ -1486,15 +1571,17 @@ Instead, edit gulp/templates/sprite.css */
 
 .site-header__logo-icon{
 			border-radius: 20px;
-			height: 70px;
-			width: 70px;
+			height: 60px;
+			width: 60px;
 			
 		}
 
 @media(min-width: 776px){
 
 .site-header__logo-icon{
-				border-radius: 20px
+				border-radius: 20px;
+				height: 70px;
+				width: 60px
 			
 		}
 	}
@@ -1508,12 +1595,13 @@ Instead, edit gulp/templates/sprite.css */
 @media(min-width: 776px){
 
 .site-header__logo-title{
-				display: inline;
+				display: inline-block;
 				position: relative;
 				color: #FFF;
 				font-family: Arial, Helvetica, sans-serif;
 				font-weight: bold;
-				bottom: 2.5rem;
+				font-size: 20px;
+				bottom: 2rem;
 				padding-left: .2rem
 			
 
@@ -1627,6 +1715,7 @@ Instead, edit gulp/templates/sprite.css */
 			height: 40px;
 			width: 40px;
 			bottom: 1rem;
+			cursor: pointer;
 		}
 
 .site-header__menu-content--is-visible{
@@ -1651,8 +1740,7 @@ Instead, edit gulp/templates/sprite.css */
 @media(min-width: 776px){
 
 .primary-nav--pull-right{
-			float: right
-		
+			float: right	
 	}
 	}
 
@@ -1703,6 +1791,8 @@ Instead, edit gulp/templates/sprite.css */
 		display: block;
 		font-size: .8rem;
 		background-color: rgba(47,85,114, .5);
+
+		
 	}
 
 @media(min-width: 776px){
@@ -1711,5 +1801,15 @@ Instead, edit gulp/templates/sprite.css */
 			padding:12px 0;
 			font-size: 1rem;
 			background-color: transparent
+
+		
 	}
+
+			.primary-nav a:hover {
+				color: #d59541;
+			}
+
+			.primary-nav a.is-current-link {
+				color: #fabb69;
+			}
 	}

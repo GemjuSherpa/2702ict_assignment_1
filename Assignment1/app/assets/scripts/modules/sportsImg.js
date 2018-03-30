@@ -1,8 +1,11 @@
 import $ from 'jquery';
 
+import Modal from './modal';
+
 class SportsImg {
 
     constructor() {
+        
         this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
         this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
         this.content = $(".page-section__photo-page");
@@ -31,18 +34,26 @@ class SportsImg {
     }
 
     getSizes(images) {
+        
         let photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
         $.getJSON(photoIdUrl, (results) => {
             console.log(results);
-            
             images.thumb = results.sizes.size[4].source;
             if(images.thumb == false){
                 images.thumb = results.sizes.size[3].source;
             }
-            //images.full = results.sizes.size[results.sizes.size.length - 1].source;
+            images.full = results.sizes.size[results.sizes.size.length - 1].source;
             this.content.append(`
-                <figure class="content__photo--img" data-full="${images.thumb}"><img src="${images.thumb}" height="290px", width="300px"><figcaption>${images.title}</figcaption></figure>
+                <figure class="content__photo--img" data-full = "${images.full}"  data-title = "${images.title}"><img class="page-section__photo-page--img" src="${images.thumb}" height="270px", width="270px"><figcaption>${images.title}</figcaption></figure>
             `);
+            $("figure").click((event)=>{
+                var imgsrc = event.currentTarget.dataset.full;
+                var imgtitle = event.currentTarget.dataset.title;
+                //console.log(event);
+                var modal = new Modal();
+                modal.openModal(imgsrc, imgtitle);
+            })
+            
         });
     }
 

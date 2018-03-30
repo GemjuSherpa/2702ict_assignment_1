@@ -7,16 +7,15 @@
 	}
 
 	&--pull-right{
+
 		@mixin atMedium{
 			float: right;
-		}
-		
+		}	
 	}
 
 	ul{
 		margin: 0;
 		padding: 0;
-
 		@mixin clearfix;
 	}
 
@@ -54,6 +53,16 @@
 			padding:12px 0;
 			font-size: 1rem;
 			background-color: transparent;
+
+			&:hover {
+				color: $mainOrange;
+			}
+
+			&.is-current-link {
+				color: #fabb69;
+			}
 		}
+
+		
 	}
 }

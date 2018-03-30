@@ -1,10 +1,10 @@
 .site-header{
 	position: fixed;
 	top: 0;
-	z-index: 9999;
+	z-index: 9;
 	width: 100%;
 	padding: 10px 0;
-	background-color: rgba($mainBlue, .6);
+	/* background-color: rgba($mainBlue, .2); */
 	transition: background-color .3s ease-out;
 
 	&--is-expanded{
@@ -12,7 +12,9 @@
 	}
 
 	@mixin atMedium{
-		background-color: rgba($mainBlue, .2);
+		background-color: rgba($mainBlue, .6);
+		width: 100%;
+		
 	}
 
 	&__btn-container{
@@ -30,7 +32,6 @@
 		transform: translateX(-50%) scale(.8);
 		transform-origin: 50% 0;
 		position: absolute;
-		
 		padding: 0;
 		
 
@@ -41,11 +42,13 @@
 
 		&-icon{
 			border-radius: 20px;
-			height: 70px;
-			width: 70px;
+			height: 60px;
+			width: 60px;
 
 			@mixin atMedium{
 				border-radius: 20px;
+				height: 70px;
+				width: 60px;
 			}
 			
 		}
@@ -54,12 +57,13 @@
 			display: none;
 
 			@mixin atMedium{
-				display: inline;
+				display: inline-block;
 				position: relative;
 				color: #FFF;
 				font-family: Arial, Helvetica, sans-serif;
 				font-weight: bold;
-				bottom: 2.5rem;
+				font-size: 20px;
+				bottom: 2rem;
 				padding-left: .2rem;
 			}
 			
@@ -77,6 +81,7 @@
 		position: absolute;
 		top: 10px;
 		right: 10px;
+
 
 		&::before{
 			content: "";
@@ -115,8 +120,7 @@
 		}
 
 		@mixin atMedium{
-			display: none;
-			
+			display: none;	
 		}
 	}
 
@@ -156,6 +160,7 @@
 			height: 40px;
 			width: 40px;
 			bottom: 1rem;
+			cursor: pointer;
 		}
 
 		&--is-visible{
