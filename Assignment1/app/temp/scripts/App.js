@@ -10378,6 +10378,7 @@ var Modal = function () {
     }, {
         key: "openModal",
         value: function openModal(imgsrc, imgtitle) {
+
             this.modal.addClass("modal--is-visible");
             this.imgModal.attr('src', imgsrc);
             this.imgTitle.text(imgtitle);
@@ -10429,7 +10430,7 @@ var _Categories = __webpack_require__(8);
 
 var _Categories2 = _interopRequireDefault(_Categories);
 
-var _Modal = __webpack_require__(10);
+var _Modal = __webpack_require__(11);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -10443,6 +10444,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     //var popular = new MostPopular();
     var categories = new _Categories2.default();
     // var modal = new Modal();
+
+    //console.log(bodyPhotos.thumblist);
 });
 
 /***/ }),
@@ -10601,10 +10604,10 @@ var Search = function () {
 
             var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
             _jquery2.default.getJSON(photoIdUrl, function (results) {
-                console.log(results);
+                //console.log(results);
                 images.thumb = results.sizes.size[4].source;
-                //images.full = results.sizes.size[results.sizes.size.length - 1].source;
-                _this2.resultsDiv.append('\n                <figure class="content__photo--img" data-full="' + images.thumb + '" data-title="' + images.title + '"><img src="' + images.thumb + '" height="270px", width="270px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
+                images.full = results.sizes.size[results.sizes.size.length - 1].source;
+                _this2.resultsDiv.append('\n                <figure class="content__photo--img" data-full="' + images.full + '" data-title="' + images.title + '"><img src="' + images.thumb + '" height="270px", width="270px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
 
                 (0, _jquery2.default)("figure").click(function (event) {
                     var imgsrc = event.currentTarget.dataset.full;
@@ -10766,6 +10769,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//import RecentlyViewed from './recentlyViewed';
 var SportsImg = function () {
     function SportsImg() {
         _classCallCheck(this, SportsImg);
@@ -10773,8 +10777,14 @@ var SportsImg = function () {
         this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
         this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
         this.content = (0, _jquery2.default)(".page-section__photo-page");
+        this.img = (0, _jquery2.default)(".page-section__recent-imglist");
         this.images = [];
+        this.nrequest;
+        this.nreceived;
         this.events();
+        this.modal = new _modal2.default();
+        //this.recent = new RecentlyViewed();
+        this.thumblist = [];
     }
 
     _createClass(SportsImg, [{
@@ -10788,9 +10798,10 @@ var SportsImg = function () {
             var _this = this;
 
             _jquery2.default.getJSON(this.url + this.API_KEY + "&text=sports", function (results) {
-                _this.numImages = results.photos.photo.length;
-                //this.content.empty();
-                for (var i = 0; i < _this.numImages; i++) {
+                _this.nrequest = results.photos.photo.length;
+                _this.nreceived = 0;
+
+                for (var i = 0; i < _this.nrequest; i++) {
                     var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
                     _this.images.push(photoObj);
                     _this.getSizes(photoObj);
@@ -10799,26 +10810,61 @@ var SportsImg = function () {
         }
     }, {
         key: 'getSizes',
-        value: function getSizes(images) {
+        value: function getSizes(photoObj) {
             var _this2 = this;
 
-            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoObj.id;
             _jquery2.default.getJSON(photoIdUrl, function (results) {
-                console.log(results);
-                images.thumb = results.sizes.size[4].source;
-                if (images.thumb == false) {
-                    images.thumb = results.sizes.size[3].source;
+                _this2.nreceived++;
+                photoObj.thumb = results.sizes.size[4].source;
+                if (photoObj.thumb == false) {
+                    photoObj.thumb = results.sizes.size[3].source;
+                } else {
+                    photoObj.thumb = results.sizes.size[4].source;
                 }
-                images.full = results.sizes.size[results.sizes.size.length - 1].source;
-                _this2.content.append('\n                <figure class="content__photo--img" data-full = "' + images.full + '"  data-title = "' + images.title + '"><img class="page-section__photo-page--img" src="' + images.thumb + '" height="270px", width="270px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
-                (0, _jquery2.default)("figure").click(function (event) {
-                    var imgsrc = event.currentTarget.dataset.full;
-                    var imgtitle = event.currentTarget.dataset.title;
-                    //console.log(event);
-                    var modal = new _modal2.default();
-                    modal.openModal(imgsrc, imgtitle);
-                });
+                photoObj.recent = results.sizes.size[1].source;
+                photoObj.full = results.sizes.size[results.sizes.size.length - 1].source;
+
+                if (_this2.nrequest == _this2.nreceived) {
+
+                    _this2.display(_this2.images);
+                }
             });
+        }
+    }, {
+        key: 'display',
+        value: function display(images) {
+            var _this3 = this;
+
+            var htmlstr = "";
+            //let thumblist = [];
+            var clickcount = 0;
+            images.forEach(function (element) {
+                htmlstr += '<figure class="content__photo--current" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '" height="270px", width="270px"><figcaption>' + element.title + '</figcaption></figure>';
+            });
+            this.content.empty();
+            this.content.append(htmlstr);
+            (0, _jquery2.default)("figure").click(function (event) {
+                clickcount++;
+                _this3.thumblist.unshift(event.currentTarget.dataset.thumb);
+                var imgsrc = event.currentTarget.dataset.full;
+                var imgtitle = event.currentTarget.dataset.title;
+
+                _this3.modal.openModal(imgsrc, imgtitle);
+
+                if (clickcount == _this3.thumblist.length) {
+                    _this3.displayRecent(_this3.thumblist);
+                }
+            });
+        }
+    }, {
+        key: 'displayRecent',
+        value: function displayRecent(imgthumb) {
+            var htmlstr = "";
+            imgthumb.forEach(function (element) {
+                htmlstr += '<img src="' + element + '" alt="" class="page-section__recent-img">';
+            });
+            this.img.empty().append(htmlstr);
         }
     }]);
 
@@ -10911,7 +10957,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //imports
+
 
 var _jquery = __webpack_require__(0);
 
@@ -10921,9 +10968,9 @@ var _largeHeroImg = __webpack_require__(9);
 
 var _largeHeroImg2 = _interopRequireDefault(_largeHeroImg);
 
-var _modal = __webpack_require__(1);
+var _sportsImg = __webpack_require__(10);
 
-var _modal2 = _interopRequireDefault(_modal);
+var _sportsImg2 = _interopRequireDefault(_sportsImg);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10937,16 +10984,15 @@ var Categories = function () {
         this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
         this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
         this.content = (0, _jquery2.default)(".page-section__photo-page");
-        this.contentDiv = (0, _jquery2.default)('picture');
         this.t = (0, _jquery2.default)(".tenis");
         this.f = (0, _jquery2.default)(".football");
         this.s = (0, _jquery2.default)(".swimming");
         this.b = (0, _jquery2.default)(".basketball");
-
         this.skey = ["tennis", "football, FIFA", "swimming", "basketball"];
-
-        this.recent = [];
+        this.thumblist = [];
         this.images = [];
+        this.nrequest;
+        this.nreceived;
         this.events();
     }
 
@@ -10973,46 +11019,45 @@ var Categories = function () {
             var largeHero = new _largeHeroImg2.default();
 
             _jquery2.default.getJSON(this.url + this.API_KEY + "&text=" + text, function (results) {
-                _this.numImages = results.photos.photo.length;
+                _this.nrequest = results.photos.photo.length;
+                _this.nreceived = 0;
+
+                _this.numImages = results.photos.photo;
                 var photoId = results.photos.photo[0].id;
-                for (var i = 0; i < _this.numImages; i++) {
-                    var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
+
+                _this.numImages.forEach(function (element) {
+                    var photoObj = { id: element.id, title: element.title };
                     _this.images.push(photoObj);
                     _this.getSizes(photoObj);
-                }
+                });
                 largeHero.getSizes(photoId);
             });
-            return false;
         }
 
         //flikr.photos.getSizes query
 
     }, {
         key: 'getSizes',
-        value: function getSizes(images) {
+        value: function getSizes(photoObj) {
             var _this2 = this;
 
-            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
+            this.sport = new _sportsImg2.default();
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoObj.id;
             _jquery2.default.getJSON(photoIdUrl, function (results) {
-
-                //images.thumb = results.sizes.size[4].source;
+                _this2.nreceived++;
                 if (results.sizes.size[4].source == true) {
-                    images.thumb = results.sizes.size[4].source;
+                    photoObj.thumb = results.sizes.size[4].source;
                 } else {
-                    images.thumb = results.sizes.size[3].source;
+                    photoObj.thumb = results.sizes.size[3].source;
                 }
-                //images.full = results.sizes.size[results.sizes.size.length - 1].source;
-                console.log(images.full);
-                _this2.content.append('\n                <figure class="content__photo--img" data-full="' + images.thumb + '" data-title ="' + images.title + '"><img src="' + images.thumb + '" height="290px", width="300px"><figcaption>' + images.title + '</figcaption></figure>\n            ');
-                (0, _jquery2.default)("figure").click(function (event) {
-                    var imgsrc = event.currentTarget.dataset.full;
-                    var imgtitle = event.currentTarget.dataset.title;
-                    //console.log(event);
-                    var modal = new _modal2.default();
-                    modal.openModal(imgsrc, imgtitle);
-                });
+                photoObj.recent = results.sizes.size[1].source;
+                photoObj.full = results.sizes.size[results.sizes.size.length - 1].source;
+
+                if (_this2.nrequest == _this2.nreceived) {
+                    _this2.sport.display(_this2.images);
+                }
             });
-            this.content.empty();
+            //this.content.empty();
         }
     }]);
 
@@ -11118,6 +11163,135 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _modal = __webpack_require__(1);
+
+var _modal2 = _interopRequireDefault(_modal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//import RecentlyViewed from './recentlyViewed';
+var SportsImg = function () {
+    function SportsImg() {
+        _classCallCheck(this, SportsImg);
+
+        this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
+        this.content = (0, _jquery2.default)(".page-section__photo-page");
+        this.img = (0, _jquery2.default)(".page-section__recent-imglist");
+        this.images = [];
+        this.nrequest;
+        this.nreceived;
+        this.events();
+        this.modal = new _modal2.default();
+        //this.recent = new RecentlyViewed();
+        this.thumblist = [];
+    }
+
+    _createClass(SportsImg, [{
+        key: 'events',
+        value: function events() {
+            (0, _jquery2.default)(window).on("load", this.getResults.bind(this));
+        }
+    }, {
+        key: 'getResults',
+        value: function getResults() {
+            var _this = this;
+
+            _jquery2.default.getJSON(this.url + this.API_KEY + "&text=sports", function (results) {
+                _this.nrequest = results.photos.photo.length;
+                _this.nreceived = 0;
+
+                for (var i = 0; i < _this.nrequest; i++) {
+                    var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
+                    _this.images.push(photoObj);
+                    _this.getSizes(photoObj);
+                }
+            });
+        }
+    }, {
+        key: 'getSizes',
+        value: function getSizes(photoObj) {
+            var _this2 = this;
+
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoObj.id;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+                _this2.nreceived++;
+                photoObj.thumb = results.sizes.size[4].source;
+                if (photoObj.thumb == false) {
+                    photoObj.thumb = results.sizes.size[3].source;
+                } else {
+                    photoObj.thumb = results.sizes.size[4].source;
+                }
+                photoObj.recent = results.sizes.size[1].source;
+                photoObj.full = results.sizes.size[results.sizes.size.length - 1].source;
+
+                if (_this2.nrequest == _this2.nreceived) {
+
+                    _this2.display(_this2.images);
+                }
+            });
+        }
+    }, {
+        key: 'display',
+        value: function display(images) {
+            var _this3 = this;
+
+            var htmlstr = "";
+            //let thumblist = [];
+            var clickcount = 0;
+            images.forEach(function (element) {
+                htmlstr += '<figure class="content__photo--current" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '" height="270px", width="270px"><figcaption>' + element.title + '</figcaption></figure>';
+            });
+            this.content.empty();
+            this.content.append(htmlstr);
+            (0, _jquery2.default)("figure").click(function (event) {
+                clickcount++;
+                _this3.thumblist.unshift(event.currentTarget.dataset.thumb);
+                var imgsrc = event.currentTarget.dataset.full;
+                var imgtitle = event.currentTarget.dataset.title;
+
+                _this3.modal.openModal(imgsrc, imgtitle);
+
+                if (clickcount == _this3.thumblist.length) {
+                    _this3.displayRecent(_this3.thumblist);
+                }
+            });
+        }
+    }, {
+        key: 'displayRecent',
+        value: function displayRecent(imgthumb) {
+            var htmlstr = "";
+            imgthumb.forEach(function (element) {
+                htmlstr += '<img src="' + element + '" alt="" class="page-section__recent-img">';
+            });
+            this.img.empty().append(htmlstr);
+        }
+    }]);
+
+    return SportsImg;
+}();
+
+exports.default = SportsImg;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11156,6 +11330,7 @@ var Modal = function () {
     }, {
         key: "openModal",
         value: function openModal(imgsrc, imgtitle) {
+
             this.modal.addClass("modal--is-visible");
             this.imgModal.attr('src', imgsrc);
             this.imgTitle.text(imgtitle);

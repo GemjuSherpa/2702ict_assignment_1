@@ -28,6 +28,7 @@ class Modal {
     }
 
     openModal(imgsrc, imgtitle) {
+        
         this.modal.addClass("modal--is-visible");
         this.imgModal.attr('src', imgsrc);
         this.imgTitle.text(imgtitle);
@@ -36,6 +37,7 @@ class Modal {
     closeModal() {
         this.modal.removeClass("modal--is-visible");
     }
+
 }
 
 export default Modal;

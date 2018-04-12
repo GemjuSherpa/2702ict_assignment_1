@@ -20,6 +20,7 @@
   &__inner {
     position: absolute;
     width: 80%;
+    height: 80%;
     top: 1rem;
     left: 50%;
     bottom: 2rem;
@@ -28,26 +29,43 @@
     &--img{
         position: relative;
         width: 100%;
-        height: 90%;
+        height: 100%; 
         display: block;
+
+        @mixin atMedium{
+          position: relative;
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
     }
 
     &--caption{
         text-align: center;
         color: $darkOrange;
-
     }
   }
 
   &__close {
     position: absolute;
     top: 15px;
-    right: 100px;
+    right: 25px;
     font-size: 2rem;
     transform: scaleX(1.2);
     transform-origin: 100% 0;
     color: $mainBlue;
-    cursor: pointer;
+    
+
+    @mixin atMedium{
+      position: absolute;
+      top: 15px;
+      right: 75px;
+      font-size: 2rem;
+      transform: scaleX(1.2);
+      transform-origin: 100% 0;
+      color: $mainBlue;
+      cursor: pointer;
+    }
 
     &:hover {
       color: $mainOrange;

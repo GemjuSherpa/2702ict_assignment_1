@@ -72,11 +72,11 @@ class Search {
     getSizes(images) {
         let photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + images.id;
         $.getJSON(photoIdUrl, (results) => {
-            console.log(results);
+            //console.log(results);
             images.thumb = results.sizes.size[4].source;
-            //images.full = results.sizes.size[results.sizes.size.length - 1].source;
+            images.full = results.sizes.size[results.sizes.size.length - 1].source;
             this.resultsDiv.append(`
-                <figure class="content__photo--img" data-full="${images.thumb}" data-title="${images.title}"><img src="${images.thumb}" height="270px", width="270px"><figcaption>${images.title}</figcaption></figure>
+                <figure class="content__photo--img" data-full="${images.full}" data-title="${images.title}"><img src="${images.thumb}" height="270px", width="270px"><figcaption>${images.title}</figcaption></figure>
             `);
             
             $("figure").click((event) => {

@@ -18,6 +18,8 @@ $(document).ready(function () {
     //var popular = new MostPopular();
     var categories = new Categories();
     // var modal = new Modal();
+
+    //console.log(bodyPhotos.thumblist);
    
 });
 
