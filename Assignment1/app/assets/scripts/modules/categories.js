@@ -19,10 +19,11 @@ class Categories {
         this.nrequest;
         this.nreceived;
         this.events();
+        this.sport = new SportImg();
         
     }
 
-//Events triggred.
+//Events triggered.
     events() {
         this.t.click([this.skey[0]], this.getResults.bind(this));
         this.f.click([this.skey[1]], this.getResults.bind(this));
@@ -42,11 +43,12 @@ class Categories {
 
             this.numImages = results.photos.photo;
             var photoId = results.photos.photo[0].id;
-    
+            this.images.length = 0;
             this.numImages.forEach(element => {
-                var photoObj = { id: element.id, title: element.title }
+                var photoObj = { id: element.id, title: element.title }                
                 this.images.push(photoObj);
                 this.getSizes(photoObj);
+                this.sport.getInfo(photoObj);
             });
             largeHero.getSizes(photoId);
 
@@ -55,8 +57,7 @@ class Categories {
     }
 
     //flikr.photos.getSizes query
-    getSizes(photoObj) {
-        this.sport = new SportImg();
+    getSizes(photoObj) {       
         let photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoObj.id;
         $.getJSON(photoIdUrl, (results) => {
             this.nreceived++;
@@ -70,10 +71,9 @@ class Categories {
             photoObj.full = results.sizes.size[results.sizes.size.length - 1].source;
 
             if (this.nrequest == this.nreceived) {
-                this.sport.display(this.images);
+                this.sport.display(this.images);     
             }
         });
-        //this.content.empty();
         
     }
     

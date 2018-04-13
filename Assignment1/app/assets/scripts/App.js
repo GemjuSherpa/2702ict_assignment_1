@@ -1,3 +1,4 @@
+//all the js files..
 
 import $ from 'jquery';
 import MobileMenu from './modules/MobileMenu';
@@ -9,17 +10,15 @@ import Categories from './modules/Categories';
 import Modal from './modules/Modal';
 
 
-
+//Methodes should run on window loading.
 $(document).ready(function () {
     var mobileMenu = new MobileMenu();
     var search = new Search();
     var largeHero = new LargeHeroImg();
     var bodyPhotos = new SportsImg();
-    //var popular = new MostPopular();
+    var popular = new MostPopular();
     var categories = new Categories();
     // var modal = new Modal();
-
-    //console.log(bodyPhotos.thumblist);
    
 });
 

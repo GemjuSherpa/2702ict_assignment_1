@@ -1,10 +1,12 @@
 .page-section {
 	padding: 0;
 
-
 	&__recent{
 		@mixin atMedium{
 			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			left: 2rem;
 			flex-wrap: wrap;
 		}
 
@@ -27,9 +29,6 @@
 	}
 
 	&__photo-page{
-		/* display: flex;
-		flex-wrap: wrap;
-		justify-content: center;  */
 		width: 100%;
 		display: block;
 		text-align: center;

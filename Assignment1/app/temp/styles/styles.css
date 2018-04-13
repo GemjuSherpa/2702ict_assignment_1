@@ -941,6 +941,14 @@ figure{
 			display: -webkit-box;
 			display: -ms-flexbox;
 			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			    -ms-flex-direction: column;
+			        flex-direction: column;
+			-webkit-box-pack: center;
+			    -ms-flex-pack: center;
+			        justify-content: center;
+			left: 2rem;
 			-ms-flex-wrap: wrap;
 			    flex-wrap: wrap
 	}
@@ -966,9 +974,6 @@ figure{
 	}
 
 .page-section__photo-page{
-		/* display: flex;
-		flex-wrap: wrap;
-		justify-content: center;  */
 		width: 100%;
 		display: block;
 		text-align: center;
@@ -1262,8 +1267,6 @@ figure{
 			display: flex;
 		}
 
-/*@import "modules/_generic-content-container"; */
-
 .section-title{
 	font-size:	2.55rem;
 	font-weight: 300;
@@ -1343,8 +1346,8 @@ figure{
 
 .modal__inner--img{
         position: relative;
-        width: 100%;
-        height: 100%; 
+        width: 100%; 
+         height: 100%; 
         display: block;
     }
 
@@ -1357,6 +1360,13 @@ figure{
           display: block
     }
 	}
+
+.modal__inner--details{
+      position: absolute;
+      bottom: 20px;
+      left: 5px;
+      color: orange;
+    }
 
 .modal__inner--caption{
         text-align: center;

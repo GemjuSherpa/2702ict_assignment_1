@@ -10334,7 +10334,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //All Imports
+
 
 var _jquery = __webpack_require__(0);
 
@@ -10345,6 +10346,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Modal = function () {
+    //constructor
     function Modal() {
         _classCallCheck(this, Modal);
 
@@ -10353,21 +10355,28 @@ var Modal = function () {
         this.closeModalButton = (0, _jquery2.default)(".modal__close");
         this.imgModal = (0, _jquery2.default)(".modal__inner--img");
         this.imgTitle = (0, _jquery2.default)(".modal__inner--caption");
+        this.user = (0, _jquery2.default)(".username");
+        this.date = (0, _jquery2.default)(".date");
+        this.location = (0, _jquery2.default)(".location");
         this.events();
     }
+
+    //All Events..
+
 
     _createClass(Modal, [{
         key: "events",
         value: function events() {
-            // clicking the open modal button
-            //this.openModalButton.click(this.openModal.bind(this));
-
             // clicking the x close modal button
             this.closeModalButton.click(this.closeModal.bind(this));
 
             // pushes any key
             (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
         }
+
+        //All Methodes.
+        //ESC key handler to close the modal.
+
     }, {
         key: "keyPressHandler",
         value: function keyPressHandler(e) {
@@ -10375,18 +10384,28 @@ var Modal = function () {
                 this.closeModal();
             }
         }
+
+        //Displaying a Modal
+
     }, {
         key: "openModal",
-        value: function openModal(imgsrc, imgtitle) {
+        value: function openModal(imgsrc, imgtitle, date, user, location) {
 
             this.modal.addClass("modal--is-visible");
             this.imgModal.attr('src', imgsrc);
             this.imgTitle.text(imgtitle);
+            this.user.text("UserName: " + user);
+            this.date.text("Date: " + date);
+            this.location.text("Location: " + location);
         }
+
+        //Closing a Modal
+
     }, {
         key: "closeModal",
         value: function closeModal() {
             this.modal.removeClass("modal--is-visible");
+            this.imgModal.attr('src', '');
         }
     }]);
 
@@ -10436,16 +10455,17 @@ var _Modal2 = _interopRequireDefault(_Modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//Methodes should run on window loading.
+//all the js files..
+
 (0, _jquery2.default)(document).ready(function () {
     var mobileMenu = new _MobileMenu2.default();
     var search = new _Search2.default();
     var largeHero = new _LargeHeroImg2.default();
     var bodyPhotos = new _SportsImg2.default();
-    //var popular = new MostPopular();
+    var popular = new _MostPopular2.default();
     var categories = new _Categories2.default();
     // var modal = new Modal();
-
-    //console.log(bodyPhotos.thumblist);
 });
 
 /***/ }),
@@ -10755,7 +10775,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //All Imports.
+
 
 var _jquery = __webpack_require__(0);
 
@@ -10769,8 +10790,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-//import RecentlyViewed from './recentlyViewed';
 var SportsImg = function () {
+    //Constructor
     function SportsImg() {
         _classCallCheck(this, SportsImg);
 
@@ -10779,19 +10800,25 @@ var SportsImg = function () {
         this.content = (0, _jquery2.default)(".page-section__photo-page");
         this.img = (0, _jquery2.default)(".page-section__recent-imglist");
         this.images = [];
+        this.imagesDetails = [];
         this.nrequest;
         this.nreceived;
         this.events();
         this.modal = new _modal2.default();
-        //this.recent = new RecentlyViewed();
         this.thumblist = [];
     }
+
+    //All Events
+
 
     _createClass(SportsImg, [{
         key: 'events',
         value: function events() {
-            (0, _jquery2.default)(window).on("load", this.getResults.bind(this));
+            (0, _jquery2.default)(window).on("load", this.getResults.bind(this)); //Displays all the thumbnails upon window loading.
         }
+        //All methodes
+        //Flickr's photo search query
+
     }, {
         key: 'getResults',
         value: function getResults() {
@@ -10805,9 +10832,26 @@ var SportsImg = function () {
                     var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
                     _this.images.push(photoObj);
                     _this.getSizes(photoObj);
+                    _this.getInfo(photoObj);
                 }
             });
         }
+
+        //flickr's getInfo query
+
+    }, {
+        key: 'getInfo',
+        value: function getInfo(photoObj) {
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoObj.id;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+                photoObj.uploadDate = results.photo.dates.taken;
+                photoObj.uploader = results.photo.owner.username;
+                photoObj.location = results.photo.owner.location;
+            });
+        }
+
+        //flickr's getSizes query
+
     }, {
         key: 'getSizes',
         value: function getSizes(photoObj) {
@@ -10826,45 +10870,65 @@ var SportsImg = function () {
                 photoObj.full = results.sizes.size[results.sizes.size.length - 1].source;
 
                 if (_this2.nrequest == _this2.nreceived) {
-
                     _this2.display(_this2.images);
                 }
             });
         }
+
+        //Displaying Images thumb and modal
+
     }, {
         key: 'display',
         value: function display(images) {
             var _this3 = this;
 
-            var htmlstr = "";
-            //let thumblist = [];
             var clickcount = 0;
-            images.forEach(function (element) {
-                htmlstr += '<figure class="content__photo--current" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '" height="270px", width="270px"><figcaption>' + element.title + '</figcaption></figure>';
-            });
             this.content.empty();
-            this.content.append(htmlstr);
+            images.forEach(function (element) {
+                _this3.content.append('\n                <figure class="content__photo--current" data-uploaddate="' + element.uploadDate + '" data-location="' + element.location + '" data-user="' + element.uploader + '" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '" height="270px", width="270px"><figcaption>' + element.title + '</figcaption></figure>\n            ');
+            });
+
             (0, _jquery2.default)("figure").click(function (event) {
-                clickcount++;
-                _this3.thumblist.unshift(event.currentTarget.dataset.thumb);
+                // clickcount++;
+                var thumb = event.currentTarget.dataset.thumb;
+                _this3.thumblist.unshift(thumb);
+
                 var imgsrc = event.currentTarget.dataset.full;
                 var imgtitle = event.currentTarget.dataset.title;
+                var date = event.currentTarget.dataset.uploaddate;
+                var user = event.currentTarget.dataset.user;
+                var location = event.currentTarget.dataset.location;
 
-                _this3.modal.openModal(imgsrc, imgtitle);
+                _this3.modal.openModal(imgsrc, imgtitle, date, user, location);
 
-                if (clickcount == _this3.thumblist.length) {
-                    _this3.displayRecent(_this3.thumblist);
-                }
+                // if(clickcount == this.thumblist.length){
+                _this3.displayRecent(_this3.thumblist);
+                //}
             });
         }
+        //Displaying recently viewed thumb..
+
     }, {
         key: 'displayRecent',
         value: function displayRecent(imgthumb) {
             var htmlstr = "";
-            imgthumb.forEach(function (element) {
+            var newImgThumb = this.removeDuplicateThumb(imgthumb);
+            console.log(newImgThumb);
+            newImgThumb.forEach(function (element) {
                 htmlstr += '<img src="' + element + '" alt="" class="page-section__recent-img">';
             });
             this.img.empty().append(htmlstr);
+        }
+
+        //Methodes to remove the duplicate of recently viewed imgthumb
+
+    }, {
+        key: 'removeDuplicateThumb',
+        value: function removeDuplicateThumb(arr) {
+            var unique_array = arr.filter(function (elem, index, self) {
+                return index == self.indexOf(elem);
+            });
+            return unique_array;
         }
     }]);
 
@@ -10899,9 +10963,9 @@ var MostPopular = function () {
         _classCallCheck(this, MostPopular);
 
         this.API_KEY = "api_key=dc140afe3fd3a251c2fdf9dcd835be5c";
-        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
+        this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.getPopular&per_page=20&format=json&nojsoncallback=1&";
         this.content = (0, _jquery2.default)(".page-section__photo-page");
-        this.btn = (0, _jquery2.default)(".btn--orange");
+        this.btn = (0, _jquery2.default)(".most_popular");
         this.images = [];
         this.events();
     }
@@ -10916,13 +10980,14 @@ var MostPopular = function () {
         value: function getResults() {
             var _this = this;
 
-            _jquery2.default.getJSON(this.url + this.API_KEY + "&text=sports", function (results) {
-                _this.numImages = results.photos.photo.length;
+            _jquery2.default.getJSON(this.url + this.API_KEY, function (results) {
+                //this.numImages = results.photos.photo.length;
+                console.log(results);
                 //this.content.empty();
                 for (var i = 0; i < _this.numImages; i++) {
                     var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
                     _this.images.push(photoObj);
-                    _this.getPopular(photoObj);
+                    //this.getPopular(photoObj);
                 }
             });
         }
@@ -10994,9 +11059,10 @@ var Categories = function () {
         this.nrequest;
         this.nreceived;
         this.events();
+        this.sport = new _sportsImg2.default();
     }
 
-    //Events triggred.
+    //Events triggered.
 
 
     _createClass(Categories, [{
@@ -11024,11 +11090,12 @@ var Categories = function () {
 
                 _this.numImages = results.photos.photo;
                 var photoId = results.photos.photo[0].id;
-
+                _this.images.length = 0;
                 _this.numImages.forEach(function (element) {
                     var photoObj = { id: element.id, title: element.title };
                     _this.images.push(photoObj);
                     _this.getSizes(photoObj);
+                    _this.sport.getInfo(photoObj);
                 });
                 largeHero.getSizes(photoId);
             });
@@ -11041,7 +11108,6 @@ var Categories = function () {
         value: function getSizes(photoObj) {
             var _this2 = this;
 
-            this.sport = new _sportsImg2.default();
             var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoObj.id;
             _jquery2.default.getJSON(photoIdUrl, function (results) {
                 _this2.nreceived++;
@@ -11057,7 +11123,6 @@ var Categories = function () {
                     _this2.sport.display(_this2.images);
                 }
             });
-            //this.content.empty();
         }
     }]);
 
@@ -11157,7 +11222,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //All Imports.
+
 
 var _jquery = __webpack_require__(0);
 
@@ -11171,8 +11237,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-//import RecentlyViewed from './recentlyViewed';
 var SportsImg = function () {
+    //Constructor
     function SportsImg() {
         _classCallCheck(this, SportsImg);
 
@@ -11181,19 +11247,25 @@ var SportsImg = function () {
         this.content = (0, _jquery2.default)(".page-section__photo-page");
         this.img = (0, _jquery2.default)(".page-section__recent-imglist");
         this.images = [];
+        this.imagesDetails = [];
         this.nrequest;
         this.nreceived;
         this.events();
         this.modal = new _modal2.default();
-        //this.recent = new RecentlyViewed();
         this.thumblist = [];
     }
+
+    //All Events
+
 
     _createClass(SportsImg, [{
         key: 'events',
         value: function events() {
-            (0, _jquery2.default)(window).on("load", this.getResults.bind(this));
+            (0, _jquery2.default)(window).on("load", this.getResults.bind(this)); //Displays all the thumbnails upon window loading.
         }
+        //All methodes
+        //Flickr's photo search query
+
     }, {
         key: 'getResults',
         value: function getResults() {
@@ -11207,9 +11279,26 @@ var SportsImg = function () {
                     var photoObj = { id: results.photos.photo[i].id, title: results.photos.photo[i].title };
                     _this.images.push(photoObj);
                     _this.getSizes(photoObj);
+                    _this.getInfo(photoObj);
                 }
             });
         }
+
+        //flickr's getInfo query
+
+    }, {
+        key: 'getInfo',
+        value: function getInfo(photoObj) {
+            var photoIdUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&format=json&nojsoncallback=1&" + this.API_KEY + "&photo_id=" + photoObj.id;
+            _jquery2.default.getJSON(photoIdUrl, function (results) {
+                photoObj.uploadDate = results.photo.dates.taken;
+                photoObj.uploader = results.photo.owner.username;
+                photoObj.location = results.photo.owner.location;
+            });
+        }
+
+        //flickr's getSizes query
+
     }, {
         key: 'getSizes',
         value: function getSizes(photoObj) {
@@ -11228,45 +11317,65 @@ var SportsImg = function () {
                 photoObj.full = results.sizes.size[results.sizes.size.length - 1].source;
 
                 if (_this2.nrequest == _this2.nreceived) {
-
                     _this2.display(_this2.images);
                 }
             });
         }
+
+        //Displaying Images thumb and modal
+
     }, {
         key: 'display',
         value: function display(images) {
             var _this3 = this;
 
-            var htmlstr = "";
-            //let thumblist = [];
             var clickcount = 0;
-            images.forEach(function (element) {
-                htmlstr += '<figure class="content__photo--current" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '" height="270px", width="270px"><figcaption>' + element.title + '</figcaption></figure>';
-            });
             this.content.empty();
-            this.content.append(htmlstr);
+            images.forEach(function (element) {
+                _this3.content.append('\n                <figure class="content__photo--current" data-uploaddate="' + element.uploadDate + '" data-location="' + element.location + '" data-user="' + element.uploader + '" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '" height="270px", width="270px"><figcaption>' + element.title + '</figcaption></figure>\n            ');
+            });
+
             (0, _jquery2.default)("figure").click(function (event) {
-                clickcount++;
-                _this3.thumblist.unshift(event.currentTarget.dataset.thumb);
+                // clickcount++;
+                var thumb = event.currentTarget.dataset.thumb;
+                _this3.thumblist.unshift(thumb);
+
                 var imgsrc = event.currentTarget.dataset.full;
                 var imgtitle = event.currentTarget.dataset.title;
+                var date = event.currentTarget.dataset.uploaddate;
+                var user = event.currentTarget.dataset.user;
+                var location = event.currentTarget.dataset.location;
 
-                _this3.modal.openModal(imgsrc, imgtitle);
+                _this3.modal.openModal(imgsrc, imgtitle, date, user, location);
 
-                if (clickcount == _this3.thumblist.length) {
-                    _this3.displayRecent(_this3.thumblist);
-                }
+                // if(clickcount == this.thumblist.length){
+                _this3.displayRecent(_this3.thumblist);
+                //}
             });
         }
+        //Displaying recently viewed thumb..
+
     }, {
         key: 'displayRecent',
         value: function displayRecent(imgthumb) {
             var htmlstr = "";
-            imgthumb.forEach(function (element) {
+            var newImgThumb = this.removeDuplicateThumb(imgthumb);
+            console.log(newImgThumb);
+            newImgThumb.forEach(function (element) {
                 htmlstr += '<img src="' + element + '" alt="" class="page-section__recent-img">';
             });
             this.img.empty().append(htmlstr);
+        }
+
+        //Methodes to remove the duplicate of recently viewed imgthumb
+
+    }, {
+        key: 'removeDuplicateThumb',
+        value: function removeDuplicateThumb(arr) {
+            var unique_array = arr.filter(function (elem, index, self) {
+                return index == self.indexOf(elem);
+            });
+            return unique_array;
         }
     }]);
 
@@ -11286,7 +11395,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //All Imports
+
 
 var _jquery = __webpack_require__(0);
 
@@ -11297,6 +11407,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Modal = function () {
+    //constructor
     function Modal() {
         _classCallCheck(this, Modal);
 
@@ -11305,21 +11416,28 @@ var Modal = function () {
         this.closeModalButton = (0, _jquery2.default)(".modal__close");
         this.imgModal = (0, _jquery2.default)(".modal__inner--img");
         this.imgTitle = (0, _jquery2.default)(".modal__inner--caption");
+        this.user = (0, _jquery2.default)(".username");
+        this.date = (0, _jquery2.default)(".date");
+        this.location = (0, _jquery2.default)(".location");
         this.events();
     }
+
+    //All Events..
+
 
     _createClass(Modal, [{
         key: "events",
         value: function events() {
-            // clicking the open modal button
-            //this.openModalButton.click(this.openModal.bind(this));
-
             // clicking the x close modal button
             this.closeModalButton.click(this.closeModal.bind(this));
 
             // pushes any key
             (0, _jquery2.default)(document).keyup(this.keyPressHandler.bind(this));
         }
+
+        //All Methodes.
+        //ESC key handler to close the modal.
+
     }, {
         key: "keyPressHandler",
         value: function keyPressHandler(e) {
@@ -11327,18 +11445,28 @@ var Modal = function () {
                 this.closeModal();
             }
         }
+
+        //Displaying a Modal
+
     }, {
         key: "openModal",
-        value: function openModal(imgsrc, imgtitle) {
+        value: function openModal(imgsrc, imgtitle, date, user, location) {
 
             this.modal.addClass("modal--is-visible");
             this.imgModal.attr('src', imgsrc);
             this.imgTitle.text(imgtitle);
+            this.user.text("UserName: " + user);
+            this.date.text("Date: " + date);
+            this.location.text("Location: " + location);
         }
+
+        //Closing a Modal
+
     }, {
         key: "closeModal",
         value: function closeModal() {
             this.modal.removeClass("modal--is-visible");
+            this.imgModal.attr('src', '');
         }
     }]);
 
