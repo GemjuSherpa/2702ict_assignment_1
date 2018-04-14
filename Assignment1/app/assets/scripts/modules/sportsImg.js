@@ -82,7 +82,7 @@ class SportsImg {
         this.content.empty();
         images.forEach(element => { 
             this.content.append(`
-                <figure class="content__photo--current" data-uploaddate="${element.uploadDate}" data-location="${element.location}" data-user="${element.uploader}" data-thumb="${element.recent}" data-full = "${element.full}"  data-title = "${element.title}"><img class="page-section__photo-page--img" src="${element.thumb}" height="270px", width="270px"><figcaption>${element.title}</figcaption></figure>
+                <figure class="content__photo--current" data-uploaddate="${element.uploadDate}" data-location="${element.location}" data-user="${element.uploader}" data-thumb="${element.recent}" data-full = "${element.full}"  data-title = "${element.title}"><img class="page-section__photo-page--img" src="${element.thumb}"><figcaption>${element.title}</figcaption></figure>
             `);    
         });
         
@@ -109,12 +109,19 @@ class SportsImg {
     displayRecent(imgthumb) {
         let htmlstr = "";
         var newImgThumb = this.removeDuplicateThumb(imgthumb);
-        console.log(newImgThumb);
-        newImgThumb.forEach(element => {
+
+        //slicing the first 5 items only.
+        var items = newImgThumb.slice(0, 5).map(newItems => {
+            return newItems;
+        })
+        //console.log(newImgThumb);
+        items.forEach(element => {
             htmlstr += `<img src="${element}" alt="" class="page-section__recent-img">`;
 
         });
+        
         this.img.empty().append(htmlstr);
+        
 
     }
 

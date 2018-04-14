@@ -10885,7 +10885,7 @@ var SportsImg = function () {
             var clickcount = 0;
             this.content.empty();
             images.forEach(function (element) {
-                _this3.content.append('\n                <figure class="content__photo--current" data-uploaddate="' + element.uploadDate + '" data-location="' + element.location + '" data-user="' + element.uploader + '" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '" height="270px", width="270px"><figcaption>' + element.title + '</figcaption></figure>\n            ');
+                _this3.content.append('\n                <figure class="content__photo--current" data-uploaddate="' + element.uploadDate + '" data-location="' + element.location + '" data-user="' + element.uploader + '" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '"><figcaption>' + element.title + '</figcaption></figure>\n            ');
             });
 
             (0, _jquery2.default)("figure").click(function (event) {
@@ -10913,10 +10913,16 @@ var SportsImg = function () {
         value: function displayRecent(imgthumb) {
             var htmlstr = "";
             var newImgThumb = this.removeDuplicateThumb(imgthumb);
-            console.log(newImgThumb);
-            newImgThumb.forEach(function (element) {
+
+            //slicing the first 5 items only.
+            var items = newImgThumb.slice(0, 5).map(function (newItems) {
+                return newItems;
+            });
+            //console.log(newImgThumb);
+            items.forEach(function (element) {
                 htmlstr += '<img src="' + element + '" alt="" class="page-section__recent-img">';
             });
+
             this.img.empty().append(htmlstr);
         }
 
@@ -11332,7 +11338,7 @@ var SportsImg = function () {
             var clickcount = 0;
             this.content.empty();
             images.forEach(function (element) {
-                _this3.content.append('\n                <figure class="content__photo--current" data-uploaddate="' + element.uploadDate + '" data-location="' + element.location + '" data-user="' + element.uploader + '" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '" height="270px", width="270px"><figcaption>' + element.title + '</figcaption></figure>\n            ');
+                _this3.content.append('\n                <figure class="content__photo--current" data-uploaddate="' + element.uploadDate + '" data-location="' + element.location + '" data-user="' + element.uploader + '" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '"><figcaption>' + element.title + '</figcaption></figure>\n            ');
             });
 
             (0, _jquery2.default)("figure").click(function (event) {
@@ -11360,10 +11366,16 @@ var SportsImg = function () {
         value: function displayRecent(imgthumb) {
             var htmlstr = "";
             var newImgThumb = this.removeDuplicateThumb(imgthumb);
-            console.log(newImgThumb);
-            newImgThumb.forEach(function (element) {
+
+            //slicing the first 5 items only.
+            var items = newImgThumb.slice(0, 5).map(function (newItems) {
+                return newItems;
+            });
+            //console.log(newImgThumb);
+            items.forEach(function (element) {
                 htmlstr += '<img src="' + element + '" alt="" class="page-section__recent-img">';
             });
+
             this.img.empty().append(htmlstr);
         }
 
