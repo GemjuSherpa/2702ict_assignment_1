@@ -10799,6 +10799,7 @@ var SportsImg = function () {
         this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
         this.content = (0, _jquery2.default)(".page-section__photo-page");
         this.img = (0, _jquery2.default)(".page-section__recent-imglist");
+        this.recentVisible = (0, _jquery2.default)(".page-section__recent-title");
         this.images = [];
         this.imagesDetails = [];
         this.nrequest;
@@ -10815,6 +10816,7 @@ var SportsImg = function () {
         key: 'events',
         value: function events() {
             (0, _jquery2.default)(window).on("load", this.getResults.bind(this)); //Displays all the thumbnails upon window loading.
+            this.recentVisible.click(this.makeVisible.bind(this)); //clicking on recently viewed btn to show the thumbnails.
         }
         //All methodes
         //Flickr's photo search query
@@ -10888,22 +10890,22 @@ var SportsImg = function () {
                 _this3.content.append('\n                <figure class="content__photo--current" data-uploaddate="' + element.uploadDate + '" data-location="' + element.location + '" data-user="' + element.uploader + '" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '"><figcaption>' + element.title + '</figcaption></figure>\n            ');
             });
 
+            //click features
             (0, _jquery2.default)("figure").click(function (event) {
-                // clickcount++;
                 var thumb = event.currentTarget.dataset.thumb;
-                _this3.thumblist.unshift(thumb);
-
                 var imgsrc = event.currentTarget.dataset.full;
                 var imgtitle = event.currentTarget.dataset.title;
                 var date = event.currentTarget.dataset.uploaddate;
                 var user = event.currentTarget.dataset.user;
                 var location = event.currentTarget.dataset.location;
 
+                //Displaying in a model
                 _this3.modal.openModal(imgsrc, imgtitle, date, user, location);
 
-                // if(clickcount == this.thumblist.length){
+                //for recently viewed display
+                var photoObj2 = { imgthumb: thumb, imgfull: imgsrc };
+                _this3.thumblist.unshift(photoObj2);
                 _this3.displayRecent(_this3.thumblist);
-                //}
             });
         }
         //Displaying recently viewed thumb..
@@ -10911,6 +10913,8 @@ var SportsImg = function () {
     }, {
         key: 'displayRecent',
         value: function displayRecent(imgthumb) {
+            var _this4 = this;
+
             var htmlstr = "";
             var newImgThumb = this.removeDuplicateThumb(imgthumb);
 
@@ -10918,12 +10922,27 @@ var SportsImg = function () {
             var items = newImgThumb.slice(0, 5).map(function (newItems) {
                 return newItems;
             });
-            //console.log(newImgThumb);
+
             items.forEach(function (element) {
-                htmlstr += '<img src="' + element + '" alt="" class="page-section__recent-img">';
+                htmlstr += '<img src="' + element.imgthumb + '" alt="' + element.imgfull + '" class="page-section__recent-img">';
             });
 
-            this.img.empty().append(htmlstr);
+            this.img.empty().append(htmlstr); //Appending thumbnails
+
+            //click features
+            (0, _jquery2.default)("img").click(function (event) {
+                //var imgsrc = event.currentTarget.src;
+                var imgfull = event.currentTarget.alt;
+                _this4.modal.openModal(imgfull);
+            });
+        }
+
+        //visible thumb 
+
+    }, {
+        key: 'makeVisible',
+        value: function makeVisible() {
+            this.img.addClass("page-section__recent--is-visible");
         }
 
         //Methodes to remove the duplicate of recently viewed imgthumb
@@ -10931,10 +10950,12 @@ var SportsImg = function () {
     }, {
         key: 'removeDuplicateThumb',
         value: function removeDuplicateThumb(arr) {
-            var unique_array = arr.filter(function (elem, index, self) {
-                return index == self.indexOf(elem);
+            var unique_obj = arr.filter(function (thing, index, self) {
+                return index === self.findIndex(function (t) {
+                    return t.imgthumb === thing.imgthumb && t.imgfull === thing.imgfull;
+                });
             });
-            return unique_array;
+            return unique_obj;
         }
     }]);
 
@@ -11252,6 +11273,7 @@ var SportsImg = function () {
         this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
         this.content = (0, _jquery2.default)(".page-section__photo-page");
         this.img = (0, _jquery2.default)(".page-section__recent-imglist");
+        this.recentVisible = (0, _jquery2.default)(".page-section__recent-title");
         this.images = [];
         this.imagesDetails = [];
         this.nrequest;
@@ -11268,6 +11290,7 @@ var SportsImg = function () {
         key: 'events',
         value: function events() {
             (0, _jquery2.default)(window).on("load", this.getResults.bind(this)); //Displays all the thumbnails upon window loading.
+            this.recentVisible.click(this.makeVisible.bind(this)); //clicking on recently viewed btn to show the thumbnails.
         }
         //All methodes
         //Flickr's photo search query
@@ -11341,22 +11364,22 @@ var SportsImg = function () {
                 _this3.content.append('\n                <figure class="content__photo--current" data-uploaddate="' + element.uploadDate + '" data-location="' + element.location + '" data-user="' + element.uploader + '" data-thumb="' + element.recent + '" data-full = "' + element.full + '"  data-title = "' + element.title + '"><img class="page-section__photo-page--img" src="' + element.thumb + '"><figcaption>' + element.title + '</figcaption></figure>\n            ');
             });
 
+            //click features
             (0, _jquery2.default)("figure").click(function (event) {
-                // clickcount++;
                 var thumb = event.currentTarget.dataset.thumb;
-                _this3.thumblist.unshift(thumb);
-
                 var imgsrc = event.currentTarget.dataset.full;
                 var imgtitle = event.currentTarget.dataset.title;
                 var date = event.currentTarget.dataset.uploaddate;
                 var user = event.currentTarget.dataset.user;
                 var location = event.currentTarget.dataset.location;
 
+                //Displaying in a model
                 _this3.modal.openModal(imgsrc, imgtitle, date, user, location);
 
-                // if(clickcount == this.thumblist.length){
+                //for recently viewed display
+                var photoObj2 = { imgthumb: thumb, imgfull: imgsrc };
+                _this3.thumblist.unshift(photoObj2);
                 _this3.displayRecent(_this3.thumblist);
-                //}
             });
         }
         //Displaying recently viewed thumb..
@@ -11364,6 +11387,8 @@ var SportsImg = function () {
     }, {
         key: 'displayRecent',
         value: function displayRecent(imgthumb) {
+            var _this4 = this;
+
             var htmlstr = "";
             var newImgThumb = this.removeDuplicateThumb(imgthumb);
 
@@ -11371,12 +11396,27 @@ var SportsImg = function () {
             var items = newImgThumb.slice(0, 5).map(function (newItems) {
                 return newItems;
             });
-            //console.log(newImgThumb);
+
             items.forEach(function (element) {
-                htmlstr += '<img src="' + element + '" alt="" class="page-section__recent-img">';
+                htmlstr += '<img src="' + element.imgthumb + '" alt="' + element.imgfull + '" class="page-section__recent-img">';
             });
 
-            this.img.empty().append(htmlstr);
+            this.img.empty().append(htmlstr); //Appending thumbnails
+
+            //click features
+            (0, _jquery2.default)("img").click(function (event) {
+                //var imgsrc = event.currentTarget.src;
+                var imgfull = event.currentTarget.alt;
+                _this4.modal.openModal(imgfull);
+            });
+        }
+
+        //visible thumb 
+
+    }, {
+        key: 'makeVisible',
+        value: function makeVisible() {
+            this.img.addClass("page-section__recent--is-visible");
         }
 
         //Methodes to remove the duplicate of recently viewed imgthumb
@@ -11384,10 +11424,12 @@ var SportsImg = function () {
     }, {
         key: 'removeDuplicateThumb',
         value: function removeDuplicateThumb(arr) {
-            var unique_array = arr.filter(function (elem, index, self) {
-                return index == self.indexOf(elem);
+            var unique_obj = arr.filter(function (thing, index, self) {
+                return index === self.findIndex(function (t) {
+                    return t.imgthumb === thing.imgthumb && t.imgfull === thing.imgfull;
+                });
             });
-            return unique_array;
+            return unique_obj;
         }
     }]);
 

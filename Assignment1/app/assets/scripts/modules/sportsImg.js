@@ -10,6 +10,7 @@ class SportsImg {
         this.url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=20&format=json&nojsoncallback=1&";
         this.content = $(".page-section__photo-page");
         this.img = $(".page-section__recent-imglist");
+        this.recentVisible = $(".page-section__recent-title");
         this.images = [];
         this.imagesDetails = [];
         this.nrequest;
@@ -23,7 +24,7 @@ class SportsImg {
 //All Events
     events() {
         $(window).on("load", this.getResults.bind(this)); //Displays all the thumbnails upon window loading.
-
+        this.recentVisible.click(this.makeVisible.bind(this)); //clicking on recently viewed btn to show the thumbnails.
     }
 //All methodes
     //Flickr's photo search query
@@ -85,23 +86,23 @@ class SportsImg {
                 <figure class="content__photo--current" data-uploaddate="${element.uploadDate}" data-location="${element.location}" data-user="${element.uploader}" data-thumb="${element.recent}" data-full = "${element.full}"  data-title = "${element.title}"><img class="page-section__photo-page--img" src="${element.thumb}"><figcaption>${element.title}</figcaption></figure>
             `);    
         });
-        
-        $("figure").click((event) =>{
-            // clickcount++;
-            let thumb = event.currentTarget.dataset.thumb;
-            this.thumblist.unshift(thumb);
 
+        //click features
+        $("figure").click((event) =>{    
+            let thumb = event.currentTarget.dataset.thumb;
             var imgsrc = event.currentTarget.dataset.full;
             var imgtitle = event.currentTarget.dataset.title;
             var date = event.currentTarget.dataset.uploaddate;
             var user = event.currentTarget.dataset.user;
             var location = event.currentTarget.dataset.location;
 
+            //Displaying in a model
             this.modal.openModal(imgsrc, imgtitle, date, user, location);
             
-            // if(clickcount == this.thumblist.length){
+            //for recently viewed display
+            var photoObj2 = { imgthumb: thumb, imgfull: imgsrc}
+            this.thumblist.unshift(photoObj2);
             this.displayRecent(this.thumblist);
-            //}
         });
        
     }
@@ -114,23 +115,35 @@ class SportsImg {
         var items = newImgThumb.slice(0, 5).map(newItems => {
             return newItems;
         })
-        //console.log(newImgThumb);
+
         items.forEach(element => {
-            htmlstr += `<img src="${element}" alt="" class="page-section__recent-img">`;
+            htmlstr += `<img src="${element.imgthumb}" alt="${element.imgfull}" class="page-section__recent-img">`;
 
         });
         
-        this.img.empty().append(htmlstr);
-        
+        this.img.empty().append(htmlstr); //Appending thumbnails
 
+        //click features
+        $("img").click(event=>{
+            //var imgsrc = event.currentTarget.src;
+            var imgfull = event.currentTarget.alt;
+            this.modal.openModal(imgfull);
+        });
+    }
+
+    //visible thumb 
+    makeVisible(){
+        this.img.addClass("page-section__recent--is-visible");
     }
 
     //Methodes to remove the duplicate of recently viewed imgthumb
     removeDuplicateThumb(arr) {
-        let unique_array = arr.filter(function (elem, index, self) {
-            return index == self.indexOf(elem);
-        });
-        return unique_array
+        let unique_obj= arr.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+                t.imgthumb === thing.imgthumb && t.imgfull === thing.imgfull
+            ))    
+        )
+        return unique_obj;   
     }
     
 }

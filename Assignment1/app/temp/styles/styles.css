@@ -979,24 +979,58 @@ figure{
 			display: -webkit-box;
 			display: -ms-flexbox;
 			display: flex;
-			-webkit-box-orient: vertical;
+			-webkit-box-orient: horizontal;
 			-webkit-box-direction: normal;
-			    -ms-flex-direction: column;
-			        flex-direction: column;
-			-webkit-box-pack: center;
-			    -ms-flex-pack: center;
-			        justify-content: center;
+			    -ms-flex-direction: row;
+			        flex-direction: row;
+			-webkit-box-pack: left;
+			    -ms-flex-pack: left;
+			        justify-content: left;
 			-ms-flex-wrap: wrap;
 			    flex-wrap: wrap;
-			margin-left: 7rem
+			margin-left: 3rem
 	}
 	}
 
+.page-section__recent-imglist{
+			display: none;
+		}
+
+.page-section__recent--is-visible{
+			display: block;
+		}
+
+.page-section__recent-img{
+			cursor: pointer;
+			margin-right: .5rem;
+		}
+
 .page-section__recent-title{
-			color: peru;
+			
+			background-color: #d59541;
+			color: white;
+			border-radius: 4px;
+			padding-left: .4rem;
+			padding-right: .4rem;
 			text-align: left;
 			margin-right: 1rem;
+			
 		}
+
+@media(min-width: 776px){
+
+.page-section__recent-title{
+				background-color: #d59541;
+				color: white;
+				border-radius: 4px;
+				padding-left: .4rem;
+				padding-right: .4rem;
+				text-align: left;
+				margin-right: 1rem;
+				cursor: pointer
+			
+		}
+	}
 
 .page-section--blue{
 		background-color: #2f5572;

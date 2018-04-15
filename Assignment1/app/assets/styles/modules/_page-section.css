@@ -4,16 +4,46 @@
 	&__recent{
 		@mixin atMedium{
 			display: flex;
-			flex-direction: column;
-			justify-content: center;
+			flex-direction: row;
+			justify-content: left;
 			flex-wrap: wrap;
-			margin-left: 7rem;
+			margin-left: 3rem;
+		}
+
+		&-imglist{
+			display: none;
+		}
+
+		&--is-visible{
+			display: block;
+		}
+
+		&-img{
+			cursor: pointer;
+			margin-right: .5rem;
 		}
 
 		&-title{
-			color: peru;
+			
+			background-color: $mainOrange;
+			color: white;
+			border-radius: 4px;
+			padding-left: .4rem;
+			padding-right: .4rem;
 			text-align: left;
 			margin-right: 1rem;
+
+			@mixin atMedium{
+				background-color: $mainOrange;
+				color: white;
+				border-radius: 4px;
+				padding-left: .4rem;
+				padding-right: .4rem;
+				text-align: left;
+				margin-right: 1rem;
+				cursor: pointer;
+			}
+			
 		}
 	}
 	&--blue{
